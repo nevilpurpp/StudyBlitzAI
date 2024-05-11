@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'app/ui/screens/home/home_page.dart';
 
-import 'pages/home_page.dart';
-import 'themes/theme.dart';
 
 void main() {
    Gemini.init(apiKey: 'AIzaSyDmyjxNXMn9zuQW4Y1DpGmjr2LnY-SI2C0', enableDebugging: true);
@@ -18,11 +17,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
-      theme: MyAppThemes.lightColorScheme,      
-      darkTheme: MyAppThemes.darkColorScheme,
+      //theme: MyAppThemes.lightColorScheme,      
+      //darkTheme: MyAppThemes.darkColorScheme,
      
-      home: const MyHomePage(),
+      home: const HomePage(),
     );
   }
 }
+//login 
+//save user session
 

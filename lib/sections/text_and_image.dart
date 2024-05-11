@@ -1,3 +1,4 @@
+/*
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
@@ -108,3 +109,4 @@ class _SectionTextAndImageInputState extends State<SectionTextAndImageInput> {
     );
   }
 }
+*/
