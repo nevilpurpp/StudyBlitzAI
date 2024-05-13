@@ -45,7 +45,7 @@ class _SectionChatState extends State<SectionChat> {
                       ),
                     ),
                   )
-                : const Center(child: Text('Search something!'))),
+                : const Center(child: Text('What do you wish to talk about?'))),
         if (loading) const CircularProgressIndicator(),
          if (images != null)
           Container(

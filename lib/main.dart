@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
+import 'app/core/theme/my_app_theme.dart';
 import 'app/ui/screens/home/home_page.dart';
 
 
@@ -17,8 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
-      //theme: MyAppThemes.lightColorScheme,      
-      //darkTheme: MyAppThemes.darkColorScheme,
+      theme: MyAppThemes.lightTheme,      
+      darkTheme: MyAppThemes.darkTheme,
      
       home: const HomePage(),
     );

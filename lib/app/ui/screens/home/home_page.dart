@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nevilai/app/ui/screens/home/home_widget/custonCard.dart';
+import 'package:nevilai/app/ui/screens/chat_screen/chat_page.dart';
+import 'package:nevilai/app/ui/screens/home/home_widget/custom_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,16 +12,26 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: GridView.count(
+    return Scaffold(
+      appBar: AppBar(),
+      body: GridView.count(
         crossAxisCount: 2,
         mainAxisSpacing: 5,
         crossAxisSpacing: 10,
         children:    [
           Card.filled( 
-            child:CustomCard(
-            title: 'Chat', 
-           image: 'assets/icons/chat.png'),
+            child:InkWell(
+              splashColor: Colors.blue,
+              onTap: (){
+                 Navigator.push(
+                  context,
+                 MaterialPageRoute(builder: (context) => const ChatPage()),
+                 );
+              },
+              child: CustomCard(
+              title: 'Chat', 
+                       image: 'assets/icons/chat.png'),
+            ),
           ),
           Card.filled( 
             
@@ -35,16 +46,28 @@ class _HomePageState extends State<HomePage> {
             ),
               ),
           Card.filled(
-             child: CustomCard(
-              title: 'Essay Grader', 
-              image: 'assets/icons/essay.png'),
+             child: InkWell(
+              splashColor: Colors.blue,
+              onTap: (){
+                debugPrint('Card tapped');
+              },
+               child: CustomCard(
+                title: 'Essay Grader', 
+                image: 'assets/icons/essay.png'),
+             ),
               ),
           Card.filled( 
-            child: CustomCard(
-              title: 'Explain a topic', 
-              image: 'assets/icons/trending-topic.png'),
+            child: InkWell(
+              splashColor: Colors.blue,
+              onTap: (){
+                debugPrint('Card tapped');
+              },
+              child: CustomCard(
+                title: 'Explain a topic', 
+                image: 'assets/icons/trending-topic.png'),
+            ),
               )
-
+      
         ],
         ),
     );

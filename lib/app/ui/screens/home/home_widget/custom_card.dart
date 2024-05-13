@@ -15,8 +15,19 @@ class CustomCard extends StatelessWidget {
       height:150, 
       child: Column(
         children: [
-          Image.asset(image),
-          Text(title)
+          const SizedBox(height: 25,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(image, 
+            height: 80,
+            width: 80,
+            fit: BoxFit.contain,),
+          ),
+          Text(title, 
+          style: 
+          const TextStyle(
+            fontWeight: FontWeight.bold,
+          fontSize: 25),)
         ],
       ),
     );
