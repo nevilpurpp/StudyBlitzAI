@@ -5,7 +5,7 @@ import 'app/ui/screens/home/home_page.dart';
 
 
 void main() {
-   Gemini.init(apiKey: 'AIzaSyDmyjxNXMn9zuQW4Y1DpGmjr2LnY-SI2C0', enableDebugging: true);
+   Gemini.init(apiKey: 'ENTER_YOUR_API_KEY', enableDebugging: true);
   runApp(const MyApp());
 }
 
