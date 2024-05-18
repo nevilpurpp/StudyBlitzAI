@@ -15,7 +15,9 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         title: const Text('Chat with Nevi'),
         centerTitle: true,
-        leading: IconButton(onPressed: (){},
+        leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+        },
          icon: const Icon(Icons.arrow_back_ios_outlined)),
       ),
       body: const SectionChat(),

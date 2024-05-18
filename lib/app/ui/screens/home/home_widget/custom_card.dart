@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
-   CustomCard({super.key, 
+   const CustomCard({super.key, 
   required this.title,
   required this.image,
   });
