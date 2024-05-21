@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nevilai/app/ui/screens/chat_screen/chat_page.dart';
+import 'package:nevilai/app/core/constants/assets_constant.dart';
 import 'package:nevilai/app/ui/screens/home/home_widget/app_bar.dart';
 import 'package:nevilai/app/ui/screens/home/home_widget/custom_card.dart';
+
+import '../chat_screen/chat_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,12 +37,12 @@ class _HomePageState extends State<HomePage> {
                       onTap: (){
                          Navigator.push(
                           context,
-                         MaterialPageRoute(builder: (context) => const ChatPage()),
+                         MaterialPageRoute(builder: (context) =>  ChatScreen()),
                          );
                       },
                       child: const CustomCard(
                       title: 'Chat', 
-                               image: 'assets/icons/chat.png'),
+                               image: AssetConstant.chatIcon),
                     ),
                   ),
                   Card.filled( 
@@ -52,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: const CustomCard(
                         title: 'Generate Quiz', 
-                        image: 'assets/icons/ideas.png'),
+                        image: AssetConstant.quizIcon),
                     ),
                       ),
                   Card.filled(
@@ -64,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                       },
                        child: const CustomCard(
                         title: 'Essay Grader', 
-                        image: 'assets/icons/essay.png'),
+                        image: AssetConstant.essayIcon),
                      ),
                       ),
                   Card.filled( 
@@ -76,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: const CustomCard(
                         title: 'Explain a topic', 
-                        image: 'assets/icons/trending-topic.png'),
+                        image: AssetConstant.topicIcon),
                     ),
                       )
               
