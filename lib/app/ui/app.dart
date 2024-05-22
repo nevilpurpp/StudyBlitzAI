@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nevilai/app/routes/routes.dart';
 
+import '../../routes/router.dart';
 import 'home/home_page.dart';
 
 
@@ -21,7 +23,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.dark
       ),
-     
+     onGenerateRoute: PageRouter.generateRoute,
+     initialRoute: Routes.homeRoute,
       home: const HomePage(),
     );
   }
