@@ -3,6 +3,7 @@ import 'package:nevilai/app/core/constants/assets_constant.dart';
 import 'package:nevilai/app/ui/screens/home/home_widget/app_bar.dart';
 import 'package:nevilai/app/ui/screens/home/home_widget/custom_card.dart';
 
+import '../../../routes/routes.dart';
 import '../chat_screen/chat_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,10 +36,8 @@ class _HomePageState extends State<HomePage> {
                     child:InkWell(
                       splashColor: Color.fromARGB(255, 159, 218, 191),
                       onTap: (){
-                         Navigator.push(
-                          context,
-                         MaterialPageRoute(builder: (context) =>  ChatScreen()),
-                         );
+                         Navigator.pushNamed(context, Routes.chatRoute);
+
                       },
                       child: const CustomCard(
                       title: 'Chat', 
