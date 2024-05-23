@@ -5,18 +5,25 @@ import '../../core/theme/my_app_colors.dart';
 
 // ignore: must_be_immutable
 class CommonTextFormField extends StatelessWidget {
+  
+
   CommonTextFormField(
       {super.key,
       this.suffixIconWidget,
       this.prefixIconWidget,
-      required this.onEditingComplete,
+      this.hintTextWidget,
+      this.onEditingComplete,
       this.onTap,
-      this.controller});
+      this.controller
+      });
+
   void Function()? onEditingComplete;
   void Function()? onTap;
   TextEditingController? controller;
   Widget? prefixIconWidget;
   Widget? suffixIconWidget;
+  String? hintTextWidget;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +44,7 @@ class CommonTextFormField extends StatelessWidget {
             suffixIcon: suffixIconWidget,
             prefixIcon: prefixIconWidget,
             filled: true,
-            hintText: 'message',
+            hintText: hintTextWidget,
             hintStyle:
                 const TextStyle(color: ColorConstants.white38, fontSize: 17),
             fillColor: ColorConstants.green373E4E,

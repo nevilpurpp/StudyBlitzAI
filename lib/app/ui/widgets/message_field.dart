@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../core/theme/my_app_colors.dart';
-import '../../data/models/viewmodel/chat_view_model.dart';
+import '../../data/providers/viewmodel/chat_view_model.dart';
 import 'common_image.dart';
 import 'common_image_asset.dart';
 import 'common_send_button.dart';
@@ -70,6 +70,7 @@ class MessageField extends StatelessWidget {
                                   chatViewModel?.keyboardAppear(true);
                                   chatViewModel?.showEmojiPicker(false);
                                 },
+                                hintTextWidget: 'message',
                                 suffixIconWidget: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.end,

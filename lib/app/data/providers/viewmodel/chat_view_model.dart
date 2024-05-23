@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import '../../middleware/api_services.dart';
-import '../chat_model.dart';
+import '../../models/chat_model.dart';
 import 'base_model.dart';
 
 class ChatViewModel extends BaseModel {

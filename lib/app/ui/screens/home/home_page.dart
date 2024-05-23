@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                     child: InkWell(
                       splashColor: Colors.blue,
                       onTap: (){
-                        debugPrint('Card tapped');
+                        Navigator.pushNamed(context, Routes.topicRoute);
                       },
                       child: const CustomCard(
                         title: 'Explain a topic', 

@@ -3,13 +3,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nevilai/app/core/constants/assets_constant.dart';
 import '../../../core/theme/my_app_colors.dart';
 import '../../../data/models/chat_model.dart';
-import '../../../data/models/viewmodel/chat_view_model.dart';
+import '../../../data/providers/viewmodel/chat_view_model.dart';
 import '../../widgets/common_sized_box.dart';
 import '../../widgets/common_text.dart';
 import '../../widgets/message_body.dart';
 import '../../widgets/message_field.dart';
 import '../../widgets/pop_up_menu.dart';
-import '../base_view.dart';
+import '../../../data/providers/base_view.dart';
 
 // ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
@@ -52,20 +52,18 @@ class ChatScreen extends StatelessWidget {
       children: [
         CommonSizedBox(height: 10),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-           /* Padding(
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(30)),
-                child: Image.asset(
-                  height: 45,
-                  width: 45,
-                  AssetConstant.aiIcon,
-                  fit: BoxFit.fill,
-                ),
+                child: IconButton(onPressed: (){
+                 Navigator.of(context).pop();
+                }, icon: const Icon(Icons.arrow_back_ios_new),),
               ),
             ),
-            */
+          
             CommonText(
               text: 'Chat With Nevi',
               color: ColorConstants.white,
