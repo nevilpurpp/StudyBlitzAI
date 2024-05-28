@@ -9,6 +9,7 @@ class TopicSummarizerView extends BaseModel{
   TextEditingController subjectController = TextEditingController();
    GoogleGenerativeServices generativeServices = GoogleGenerativeServices();
 
+
      String? topic;
    String? subject;
   String? difficulty;
@@ -18,6 +19,7 @@ class TopicSummarizerView extends BaseModel{
     Function(bool value) keyboard = ChatViewModel().keyboardAppear;
     return keyboard;
   }
+ 
   
   String constructPrompt(){
    String topic = topicController.text;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nevilai/app/routes/routes.dart';
-
 import '../routes/router.dart';
 import 'screens/home/home_page.dart';
 

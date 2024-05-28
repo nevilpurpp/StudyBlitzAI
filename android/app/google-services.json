@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "786488784664",
+    "project_id": "nevi-virtual-assistant",
+    "storage_bucket": "nevi-virtual-assistant.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786488784664:android:b1f1c8545342a14056906d",
+        "android_client_info": {
+          "package_name": "com.example.nevilai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786488784664-dm4p1f3hssh34v76r9f7sgjendpuh62h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nevilai",
+            "certificate_hash": "330c3a44e932a2af3bdf35b71646cb45a3f3f11f"
+          }
+        },
+        {
+          "client_id": "786488784664-vhio5p83nh0ujeghj6ssrkf7oblr9pn2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNi6HFZ76TNz50NH1bzli0H5A09oFtEw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786488784664-vhio5p83nh0ujeghj6ssrkf7oblr9pn2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
