@@ -44,3 +44,4 @@ app.*.map.json
 /android/app/release
 # Api key
 lib/app/data/middleware/api.dart
+android/app/google-services.json
