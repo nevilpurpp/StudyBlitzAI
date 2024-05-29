@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:nevilai/app/data/providers/viewmodel/auth_view_model.dart';
@@ -86,7 +88,7 @@ class LoginScreen extends StatelessWidget {
           if (credential != null) {
             // Handle successful login (navigate to home?)
             // ignore: use_build_context_synchronously
-            Navigator.pushNamed(context, Routes.homeRoute);
+            Navigator.pushNamed(context, '/home');
           } else {
             // Handle login errors
           }
@@ -97,7 +99,7 @@ class LoginScreen extends StatelessWidget {
        OutlinedButton(onPressed: ()async{
         final credential = await model!.signInWithGoogle();
         if(credential != null){
-          Navigator.pushNamed(context, Routes.homeRoute);
+          Navigator.pushNamed(context, '/home');
         }
        },
         child: const Text('SignIn with google')),

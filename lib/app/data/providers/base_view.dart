@@ -27,9 +27,19 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<T>.value(
-      value: model,
-      child: Consumer<T>(builder: widget.builder),
-    );
-  }
+  return ChangeNotifierProvider<T>.value(
+    value: model,
+    child: Consumer<T>(
+      builder: (context, model, child) {
+        if (model != null) {
+          // Use model here (safe)
+          return widget.builder(context, model, child);
+        } else {
+          // Handle the case where model is null (e.g., show a loading indicator)
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    ),
+  );
+}
 }

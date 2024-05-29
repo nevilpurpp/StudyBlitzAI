@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AppUtils {
-  static void showSuccess(String message, {ToastGravity gravity = ToastGravity.BOTTOM}) {
+  static  showSuccess(String message, {ToastGravity gravity = ToastGravity.BOTTOM}) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
@@ -11,7 +11,7 @@ class AppUtils {
       textColor: Colors.white,
     );
   }
-   static void showError(String message, {ToastGravity gravity = ToastGravity.BOTTOM}) {
+   static  showError(String message, {ToastGravity gravity = ToastGravity.BOTTOM}) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
