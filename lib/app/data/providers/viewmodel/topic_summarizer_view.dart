@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nevilai/app/data/providers/viewmodel/base_model.dart';
 import 'package:nevilai/app/data/providers/viewmodel/chat_view_model.dart';
 
+import '../../../core/utils/utils.dart';
 import '../../middleware/api_services.dart';
 
 class TopicSummarizerView extends BaseModel{
@@ -39,7 +41,10 @@ class TopicSummarizerView extends BaseModel{
     
   } catch (error) {
     // Handle potential errors during API call
-    print("Error generating summary: $error");
+    AppUtils.showError('$error');
+    if (kDebugMode) {
+      print("Error generating summary: $error");
+    }
   }
 }
 

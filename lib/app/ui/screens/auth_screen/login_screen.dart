@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:nevilai/app/data/providers/viewmodel/auth_view_model.dart';
 import 'package:nevilai/app/ui/widgets/common_text_form_field.dart';
 
+import '../../../core/utils/utils.dart';
 import '../../../data/providers/base_view.dart';
 import '../../../routes/routes.dart';
 
@@ -76,6 +77,7 @@ class LoginScreen extends StatelessWidget {
           // Perform validation (optional)
           if ( email.isEmpty || password.isEmpty) {
             // Show error message
+            AppUtils.showError('Input Your Details');
             return;
           }
         
