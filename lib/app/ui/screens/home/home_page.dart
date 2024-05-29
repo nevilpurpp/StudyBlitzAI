@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nevilai/app/core/constants/assets_constant.dart';
+import 'package:nevilai/app/data/providers/viewmodel/auth_view_model.dart';
 import 'package:nevilai/app/ui/screens/home/home_widget/app_bar.dart';
 import 'package:nevilai/app/ui/screens/home/home_widget/custom_card.dart';
 
@@ -12,12 +13,13 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
-
+final authViewModel = AuthViewModel();
 class _HomePageState extends State<HomePage> {
+  AuthViewModel currentuser = AuthViewModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: const HomeAppBar(),
+     appBar:  HomeAppBar(authViewModel: authViewModel,),
       body: Column(
         children: [
          

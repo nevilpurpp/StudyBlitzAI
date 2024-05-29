@@ -4,5 +4,8 @@ class Routes {
   static const String examRoute = 'exam';
   static const String topicRoute = 'topic';
   static const String chatRoute='chat';
+  static const String loginRoute='login';
+  static const String registerRoute ='register';
+  static const String authRoute = 'authRoute';
 
 }

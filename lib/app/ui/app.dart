@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark
       ),
      onGenerateRoute: PageRouter.generateRoute,
-     initialRoute: Routes.homeRoute,
+     initialRoute: Routes.authRoute,
       home: const HomePage(),
     );
   }

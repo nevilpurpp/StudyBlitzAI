@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../../../data/providers/viewmodel/auth_view_model.dart';
+
 class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
-  const HomeAppBar({super.key});
+  final AuthViewModel authViewModel; 
+   HomeAppBar({super.key,  required this.authViewModel});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+        automaticallyImplyLeading: false, // Disable back button
        flexibleSpace: 
       //bottom: PreferredSize(preferredSize: const Size.fromHeight(200),
          SizedBox(
@@ -18,18 +22,18 @@ class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
               children: [
                 const SizedBox(height: 30,),
                 Row(children: [
-                  const Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: Text('Hello Mike,',
-                  style: TextStyle(
+                   Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text('Hello ${authViewModel.username}!,',
+                  style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                               
                   )),
                 ),
                 const Spacer(),
-
-                IconButton(onPressed: (){}, icon: const Icon(Icons.person_2_rounded))
+                CircleAvatar(backgroundImage: NetworkImage(authViewModel.userphoto),)
+                //IconButton(onPressed: (){}, icon: const Icon(Icons.person_2_rounded))
                 ],),
                 
                 const Text('Excited to learn something new today?',)
@@ -42,5 +46,5 @@ class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
   }
   
   @override
-  Size get preferredSize => Size.fromHeight(200);
+  Size get preferredSize => const Size.fromHeight(200);
 }

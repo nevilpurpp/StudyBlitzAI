@@ -14,7 +14,11 @@ class CommonTextFormField extends StatelessWidget {
       this.hintTextWidget,
       this.onEditingComplete,
       this.onTap,
-      this.controller
+      this.controller,
+      this.obsocuringCharacter,
+      this.obscureText= false,
+      this.maxLines,
+      this.minLines
       });
 
   void Function()? onEditingComplete;
@@ -23,15 +27,18 @@ class CommonTextFormField extends StatelessWidget {
   Widget? prefixIconWidget;
   Widget? suffixIconWidget;
   String? hintTextWidget;
-  
-
+  String? obsocuringCharacter;
+   bool   obscureText;
+int? maxLines;
+int? minLines;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0),
       child: TextFormField(
-        minLines: 1,
-        maxLines: 30,
+        obscureText: obscureText,
+        minLines: minLines,
+        maxLines: obscureText ? 1 : null,
         textInputAction: TextInputAction.go,
         keyboardType: TextInputType.text,
         onTap: onTap,

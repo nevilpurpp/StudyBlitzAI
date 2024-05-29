@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 
 import 'base_model.dart';
+import 'chat_view_model.dart';
 
 class AuthViewModel extends BaseModel{
     TextEditingController nameController = TextEditingController();
@@ -13,12 +14,23 @@ class AuthViewModel extends BaseModel{
   
 
     final FirebaseAuth _auth = FirebaseAuth.instance;
-
+Stream<User?> get userState => _auth.authStateChanges();
   get user => _auth.currentUser;
+  get username => _auth.currentUser!.displayName;
+  get useremail => _auth.currentUser!.email;
+  get userphoto => _auth.currentUser!.photoURL;
+  keyboard(bool value){
+    Function(bool value) keyboard = ChatViewModel().keyboardAppear;
+    return keyboard;
+  }
+  
+  void listenToAuthState(){
+    _auth.authStateChanges().listen(user);
+  }
 
  //SIGN UP METHOD
  Future<UserCredential?> registerWithEmailAndPassword(
-    String email, String password) async {
+   String name, String email, String password) async {
   try {
     final credential = await _auth.createUserWithEmailAndPassword(
       email: email,
