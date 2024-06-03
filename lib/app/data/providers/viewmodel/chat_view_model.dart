@@ -81,13 +81,13 @@ class ChatViewModel extends BaseModel {
     File? image = photo;
     log(image.toString());
     chatList.add(ChatModel(
-        role: 'user',
+        role: 'you',
         text: messageController.text,
         photo: image));
     scrollMessages();
     updateUI();
     setPhoto = null;
-    chatList.add(ChatModel(role: 'model', text: '', photo: null));
+    chatList.add(ChatModel(role: 'Nevi', text: '', photo: null));
     scrollMessages();
     updateUI();
 
@@ -103,7 +103,7 @@ class ChatViewModel extends BaseModel {
     } else {
       String data = await generativeServices.getText(messageController.text);
       chatList.removeAt(index);
-      chatList.add(ChatModel(text: data, role: 'model'));
+      chatList.add(ChatModel(text: data, role: 'Nevi'));
       updateUI();
     }
     scrollMessages();

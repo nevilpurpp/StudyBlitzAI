@@ -2,6 +2,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:nevilai/app/core/utils/utils.dart';
 import 'package:nevilai/app/data/middleware/api.dart';
 import '../models/chat_model.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -19,6 +20,7 @@ class GoogleGenerativeServices {
       result = response.text ?? '';
       return result;
     } catch (e) {
+      AppUtils.showError('Error is $e');
       log("Error is $e");
     }
     return '';
@@ -41,6 +43,7 @@ class GoogleGenerativeServices {
           role: response.candidates.first.content.role.toString(),
           text: response.text.toString());
     } catch (e) {
+      AppUtils.showError('Error is $e');
       log("Error is $e");
     }
     return null;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:nevilai/app/core/constants/assets_constant.dart';
 import 'package:nevilai/app/data/providers/viewmodel/auth_view_model.dart';
 import 'package:nevilai/app/ui/screens/home/home_widget/app_bar.dart';
 import 'package:nevilai/app/ui/screens/home/home_widget/custom_card.dart';
-
 import '../../../routes/routes.dart';
-import '../chat_screen/chat_screen.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,75 +19,132 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar:  HomeAppBar(authViewModel: authViewModel,),
-      body: Column(
-        children: [
-         
-          SizedBox(
-            height: 450,
+      body: SafeArea(
+        child: Column(
+          children: [
+            
+            SizedBox(
+            height: 200,
             width: double.infinity,
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: GridView.count(
-                crossAxisCount: 2,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 6,
-                children:    [
-                  Card.filled( 
-                    elevation: 5,
-                    child:InkWell(
-                      splashColor: Color.fromARGB(255, 159, 218, 191),
-                      onTap: (){
-                         Navigator.pushNamed(context, Routes.chatRoute);
-
-                      },
-                      child: const CustomCard(
-                      title: 'Chat', 
-                               image: AssetConstant.chatIcon),
-                    ),
+              padding: const EdgeInsets.all(8.0),
+              child:  Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 30,),
+                  Row(children: [
+                     Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text('Hello, ${authViewModel.username ?? 'Welcome!'}',
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                                
+                    )),
                   ),
-                  Card.filled( 
-                    elevation: 5,
-                    child: InkWell(
-                      splashColor: Colors.blue,
-                      onTap: (){
-                        debugPrint('Card tapped');
-                      },
-                      child: const CustomCard(
-                        title: 'Generate Quiz', 
-                        image: AssetConstant.quizIcon),
-                    ),
-                      ),
-                  Card.filled(
-                    elevation: 5,
-                     child: InkWell(
-                      splashColor: Colors.purpleAccent.shade200,
-                      onTap: (){
-                        debugPrint('Card tapped');
-                      },
-                       child: const CustomCard(
-                        title: 'Essay Grader', 
-                        image: AssetConstant.essayIcon),
-                     ),
-                      ),
-                  Card.filled( 
-                    elevation: 5,
-                    child: InkWell(
-                      splashColor: Colors.blue,
-                      onTap: (){
-                        Navigator.pushNamed(context, Routes.topicRoute);
-                      },
-                      child: const CustomCard(
-                        title: 'Explain a topic', 
-                        image: AssetConstant.topicIcon),
-                    ),
-                      )
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pushNamed(context, Routes.profileRoute);
+                    },
+                    child: authViewModel.userphoto != null
+                    ? CircleAvatar(backgroundImage: NetworkImage(authViewModel.userphoto),)
+                    : const SizedBox(
+                       height: 50,
+                       width: 50,
+                      child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage(AssetConstant.profileIcon),),
+                         ), 
+        
+                  //IconButton(onPressed: (){}, icon: const Icon(Icons.person_2_rounded))
+              )],),
+                  
+                  const Text('Ace your exams\nwith the ultimate study buddy,',
+                  style: TextStyle(fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white60
+                  ),)
               
                 ],
-                ),
+              ),
             ),
-          ),
-        ],
+            ),
+            SizedBox(
+              height: 340,
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:    [
+                    
+                     Expanded(
+                       child: CustomCard(
+                                 title: 'Chat\nwith AI', 
+                                  imagePath: AssetConstant.chatIcon,
+                        color: const Color(0xFFC5F432), 
+                        isMainButton: true,
+                         onPressed: () { 
+                          Navigator.pushNamed(context, Routes.chatRoute);
+                          },
+                        
+                               ),
+                     ),
+                    
+                      Expanded(
+                        child: Column(
+                          children: [
+                             CustomCard(
+                        title: 'Exam\nPreparation', 
+                        imagePath: AssetConstant.examprepIcon,
+                          color: Color(0xFFC09FF8), 
+                        isMainButton: false,
+                         onPressed: () { 
+                          Navigator.pushNamed(context, Routes.examRoute);
+                          },
+                        
+                        ),
+                            const SizedBox(height: 8),             
+                      CustomCard(
+                        title: 'topic\nSummarizer', 
+                        imagePath: AssetConstant.topicIcon,
+                        color: Color(0xFFFEC4DD), 
+                        isMainButton: false,
+                         onPressed: () { 
+                          Navigator.pushNamed(context, Routes.topicRoute);
+                          },
+                        
+                        ),
+                          ],
+                        ),
+                      )
+                
+                  ],
+                  ),
+              ),
+            ),
+            const Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('History',style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600
+                  ),),
+                ),
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('see all',style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600
+                  ),),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

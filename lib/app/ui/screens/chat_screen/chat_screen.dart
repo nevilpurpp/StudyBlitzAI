@@ -10,6 +10,7 @@ import '../../widgets/message_body.dart';
 import '../../widgets/message_field.dart';
 import '../../widgets/pop_up_menu.dart';
 import '../../../data/providers/base_view.dart';
+import '../home/home_page.dart';
 
 // ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
@@ -99,7 +100,7 @@ class ChatScreen extends StatelessWidget {
             data = model?.chatList[index];
           }
           bool isLoading = index + 1 == last &&
-              data?.role != 'user' &&
+              data?.role != '${authViewModel.username ?? 'user'}' &&
               data?.text == '';
           return MessageBody(chatModel: data, isLoading: isLoading);
         },

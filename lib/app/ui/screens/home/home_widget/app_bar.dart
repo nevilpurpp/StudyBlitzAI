@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nevilai/app/core/constants/assets_constant.dart';
 
 import '../../../../data/providers/viewmodel/auth_view_model.dart';
+import '../../../../routes/routes.dart';
 
 class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
   final AuthViewModel authViewModel; 
@@ -24,7 +26,7 @@ class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
                 Row(children: [
                    Padding(
                   padding: const EdgeInsets.all(5.0),
-                  child: Text('Hello ${authViewModel.username}!,',
+                  child: Text('Hello,${authViewModel.username ?? 'Welcome!'}',
                   style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -32,9 +34,22 @@ class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
                   )),
                 ),
                 const Spacer(),
-                CircleAvatar(backgroundImage: NetworkImage(authViewModel.userphoto),)
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamed(context, Routes.profileRoute);
+                  },
+                  child: authViewModel.userphoto != null
+  ? CircleAvatar(backgroundImage: NetworkImage(authViewModel.userphoto),)
+  : const SizedBox(
+    height: 50,
+  width: 50,
+  child: CircleAvatar(
+    backgroundColor: Colors.white,
+    backgroundImage: AssetImage(AssetConstant.profileIcon),),
+  ), 
+
                 //IconButton(onPressed: (){}, icon: const Icon(Icons.person_2_rounded))
-                ],),
+            )],),
                 
                 const Text('Excited to learn something new today?',)
             
