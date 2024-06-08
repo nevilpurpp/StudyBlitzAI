@@ -64,7 +64,9 @@ class ChatScreen extends StatelessWidget {
                 }, icon: const Icon(Icons.arrow_back_ios_new),),
               ),
             ),
-          
+            
+            _buildNeviAvatar(),
+            const SizedBox(width: 10,),
             CommonText(
               text: 'Chat With Nevi',
               color: ColorConstants.white,
@@ -124,5 +126,15 @@ class ChatScreen extends StatelessWidget {
             },
           );
         });
+  }
+  
+  Widget _buildNeviAvatar() {
+    return const SizedBox(
+      height: 37,
+      width: 37,
+      child: CircleAvatar(
+        backgroundImage:  AssetImage(AssetConstant.nevilogo),
+      ),
+    );
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:nevilai/app/core/constants/assets_constant.dart';
 
@@ -23,7 +24,7 @@ class MessageBody extends StatelessWidget {
       children: [
         // Message bubble positioned at the bottom
         _buildMessageBubble(context),
-SizedBox(height: 10,),
+const SizedBox(height: 10,),
         // User/Nevi avatar positioned slightly on top
         Positioned(
           top: 1, // Adjust vertical offset (negative value overlaps)
@@ -60,12 +61,12 @@ SizedBox(height: 10,),
               child: Container(
                 padding: const EdgeInsets.all(10),
                 color: chatModel?.role == 'you'
-                    ? const Color.fromARGB(255, 122, 155, 23)
-                    : const Color.fromARGB(255, 117, 146, 31),
+                    ? Color.fromARGB(255, 98, 165, 89)
+                    : Color.fromARGB(255, 98, 165, 89),
                 child: isLoading == true
                     ? LoadingAnimationWidget.waveDots(color: ColorConstants.white, size: 30)
                     : CommonText(
-                        text: chatModel?.text ?? '',
+                        text : chatModel?.text ?? '',
                         color: ColorConstants.white,
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
