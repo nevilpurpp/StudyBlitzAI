@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class AppUtils {
+import '../../data/providers/viewmodel/base_model.dart';
+
+class AppUtils extends BaseModel {
   static  showSuccess(String message, {ToastGravity gravity = ToastGravity.BOTTOM}) {
     Fluttertoast.showToast(
       msg: message,
