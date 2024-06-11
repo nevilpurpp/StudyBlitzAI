@@ -40,7 +40,8 @@ String constructPrompt(){
   }
 
   Future<void> generateQuestions()async {
-    
-  }
+     var questionsResponse = await generativeServices.getText(constructPrompt());
+     questions = questionsResponse as List;
+       }
 
 }
