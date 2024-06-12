@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:nevilai/app/data/models/quiz_question_model.dart';
+import '../../../core/utils/utils.dart';
 import '../../middleware/api_services.dart';
 import 'base_model.dart';
 import 'chat_view_model.dart';
@@ -14,9 +16,10 @@ GoogleGenerativeServices generativeServices = GoogleGenerativeServices();
   String? subject;
   //String? difficulty;
   var questions = [];
-    keyboard(bool value){
-    Function(bool value) keyboard = ChatViewModel().keyboardAppear;
-    return keyboard;
+
+  keyboard(bool value){
+  Function(bool value) keyboard = ChatViewModel().keyboardAppear;
+  return keyboard;
   }
 
 String constructPrompt(){
@@ -39,9 +42,28 @@ String constructPrompt(){
     return prompt;
   }
 
-  Future<void> generateQuestions()async {
+  Future<List> generateQuestions()async {
+    try{
      var questionsResponse = await generativeServices.getText(constructPrompt());
-     questions = questionsResponse as List;
+    List<Map<String, dynamic>> data = questionsResponse as List<Map<String, dynamic>>;
+   for (var item in data) {
+    questions.add(QuizQuestion(
+      item["question"],
+      item["answer"],
+      incorrectAnswers: item["incorrect_answers"] ?? [],
+    ));
+  }
+  
+    updateUI(); // Update UI with the retrieved summary
+    notifyListeners();
+    
+       } catch(error){
+        // Handle potential errors during API call
+    AppUtils.showError('$error');
+    if (kDebugMode) {
+      print("Error generating summary: $error");
+    }
        }
-
+       return questions;
+  }
 }

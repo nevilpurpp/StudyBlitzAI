@@ -21,7 +21,7 @@ class PageRouter {
       case Routes.topicRoute:
           return MaterialPageRoute(builder: (context) =>  TopicScreen());
       case Routes.examRoute:
-          return MaterialPageRoute(builder: (context) => const ExamPreparation());
+          return MaterialPageRoute(builder: (context) =>  ExamPreparation());
       case Routes.chatRoute:
         return MaterialPageRoute(builder: (context) => ChatScreen());
       case  Routes.loginRoute:
