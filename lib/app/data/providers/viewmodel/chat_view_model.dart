@@ -1,16 +1,20 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
+import '../../hive_adapter/user_history.dart';
 import '../../middleware/api_services.dart';
 import '../../models/chat_model.dart';
+import 'auth_view_model.dart';
 import 'base_model.dart';
 
 class ChatViewModel extends BaseModel {
   TextEditingController messageController = TextEditingController();
   ScrollController scrollController = ScrollController();
   GoogleGenerativeServices generativeServices = GoogleGenerativeServices();
+  AuthViewModel auth = AuthViewModel();
 
   File? _photo;
   ImagePicker? _imagePicker=ImagePicker();
@@ -18,6 +22,14 @@ class ChatViewModel extends BaseModel {
   List<ChatModel> chatList = [];
   bool? _isTyping;
   bool? _isEmojiPicker;
+  
+  Box<ChatModel>? _chatBox;
+  Box<UserHistory>? _historyBox;
+  
+
+    ChatViewModel() {
+    _initializeHive();
+  }
 
   bool? get isEmojiPicker => _isEmojiPicker;
   bool? get isTyping => _isTyping;
@@ -50,6 +62,13 @@ class ChatViewModel extends BaseModel {
   //   _chatList = setChatList;
   // }
 
+  Future<void> _initializeHive() async {
+    //_chatBox = Hive.box<ChatModel>('chatBox');
+    //_historyBox = Hive.box<UserHistory>('historyBox');
+    chatList = _chatBox?.values.toList() ?? [];
+    updateUI();
+  }
+  
   Future imgFromDevice(ImageSource source) async {
     final pickedFile = await imagePicker?.pickImage(source: source);
     if (pickedFile != null) {
@@ -64,7 +83,6 @@ class ChatViewModel extends BaseModel {
   keyboardAppear(bool value) {
     setTyping = value;
 
-    updateUI();
   }
 
   showEmojiPicker(bool value) {
@@ -74,39 +92,54 @@ class ChatViewModel extends BaseModel {
 
   scrollMessages() {
     scrollController.animateTo(scrollController.position.maxScrollExtent + 120,
-        duration: const Duration(milliseconds: 5), curve: Curves.easeOut);
+        duration: const Duration(milliseconds: 5),
+         curve: Curves.easeOut);
   }
 
-  getChat() async {
-    File? image = photo;
-    log(image.toString());
-    chatList.add(ChatModel(
-        role: 'you',
-        text: messageController.text,
-        photo: image));
-    scrollMessages();
-    updateUI();
-    setPhoto = null;
-    chatList.add(ChatModel(role: 'Nevi', text: '', photo: null));
-    scrollMessages();
-    updateUI();
+  Future<void> getChat() async {
+    final image = _photo;
+    final userMessage = ChatModel(
+      role: '${auth.username}',
+      text: messageController.text,
+      photo: image,
+    );
 
-    int index = chatList.length - 1;
+    _addMessageToList(userMessage);
+
+    final neviMessage = ChatModel(role: 'Nevi', text: '', photo: null);
+    _addMessageToList(neviMessage);
+
     if (image != null) {
-      final chatData = await generativeServices.getTextFromImage(
-          image, messageController.text);
-      chatList.removeAt(index);
-      chatList.add(ChatModel(
-        role: chatData?.role ?? '',
+      final chatData = await generativeServices.getTextFromImage(image, messageController.text);
+      _updateLastMessage(ChatModel(
+        role: chatData?.role ?? 'Nevi',
         text: chatData?.text ?? '',
       ));
     } else {
-      String data = await generativeServices.getText(messageController.text);
-      chatList.removeAt(index);
-      chatList.add(ChatModel(text: data, role: 'Nevi'));
-      updateUI();
+      final data = await generativeServices.getText(messageController.text);
+      _updateLastMessage(ChatModel(
+        role: 'Nevi',
+        text: data,
+      ));
     }
+  }
+
+  void _addMessageToList(ChatModel message) {
+    chatList.add(message);
+    _chatBox?.add(message);
     scrollMessages();
     updateUI();
+  }
+
+    void _updateLastMessage(ChatModel message) {
+    //chatList.removeLast();
+    chatList.add(message);
+    _chatBox?.putAt(_chatBox!.length - 1, message);
+    scrollMessages();
+    updateUI();
+  }
+    Future<void> updateHistory(String action) async {
+    final historyEntry = UserHistory(timestamp: DateTime.now(), action: action);
+    await _historyBox?.add(historyEntry);
   }
 }

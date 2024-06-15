@@ -7,6 +7,7 @@ import 'package:nevilai/app/ui/screens/home/home_page.dart';
 import 'package:nevilai/app/ui/screens/profile/profile_screen.dart';
 import '../ui/screens/chat_screen/chat_screen.dart';
 import '../ui/screens/exam_prep/exam_preparation.dart';
+import '../ui/screens/exam_prep/questions_page.dart';
 import 'routes.dart';
 
 class PageRouter {
@@ -22,6 +23,8 @@ class PageRouter {
           return MaterialPageRoute(builder: (context) =>  TopicScreen());
       case Routes.examRoute:
           return MaterialPageRoute(builder: (context) =>  ExamPreparation());
+      case Routes.quizRoute:
+          return MaterialPageRoute(builder: (context) => QuestionsPage());    
       case Routes.chatRoute:
         return MaterialPageRoute(builder: (context) => ChatScreen());
       case  Routes.loginRoute:

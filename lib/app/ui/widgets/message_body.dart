@@ -7,6 +7,7 @@ import 'package:nevilai/app/core/constants/assets_constant.dart';
 
 import '../../core/theme/my_app_colors.dart';
 import '../../data/models/chat_model.dart';
+import '../../data/providers/viewmodel/auth_view_model.dart';
 import '../screens/home/home_page.dart';
 import 'common_image.dart';
 import 'common_sized_box.dart';
@@ -17,6 +18,7 @@ class MessageBody extends StatelessWidget {
   MessageBody({super.key, required this.chatModel, required this.isLoading});
   ChatModel? chatModel;
   bool isLoading;
+  AuthViewModel auth = AuthViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +30,9 @@ const SizedBox(height: 10,),
         // User/Nevi avatar positioned slightly on top
         Positioned(
           top: 1, // Adjust vertical offset (negative value overlaps)
-          left: chatModel?.role == 'you' ? null : 0.0, // Position based on role
-          right: chatModel?.role == 'you' ? 0.0 : null,
-          child: chatModel?.role == 'you'
+          left: chatModel?.role == '${auth.username}' ? null : 0.0, // Position based on role
+          right: chatModel?.role == '${auth.username}' ? 0.0 : null,
+          child: chatModel?.role == '${auth.username}'
               ? _buildUserAvatar(context)
               : _buildNeviAvatar(),
         ),
@@ -40,16 +42,16 @@ const SizedBox(height: 10,),
 
   Widget _buildMessageBubble(BuildContext context) {
     return Align(
-      alignment: chatModel?.role == 'you' ? Alignment.centerRight : Alignment.centerLeft,
+      alignment: chatModel?.role == '${auth.username}' ? Alignment.centerRight : Alignment.centerLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Padding(
-            padding: chatModel?.role == 'you'
+            padding: chatModel?.role == '${auth.username}'
                 ? const EdgeInsets.only(top: 10, right: 15, left: 70)
                 : const EdgeInsets.only(left: 15, right: 70, top: 10, bottom: 10),
             child: ClipRRect(
-              borderRadius: chatModel?.role == 'you'
+              borderRadius: chatModel?.role == '${auth.username}'
                   ? const BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       topLeft: Radius.circular(20),
@@ -60,7 +62,7 @@ const SizedBox(height: 10,),
                       topRight: Radius.circular(20)),
               child: Container(
                 padding: const EdgeInsets.all(10),
-                color: chatModel?.role == 'you'
+                color: chatModel?.role == '${auth.username}'
                     ? Color.fromARGB(255, 98, 165, 89)
                     : Color.fromARGB(255, 98, 165, 89),
                 child: isLoading == true
@@ -102,8 +104,8 @@ const SizedBox(height: 10,),
                   errorBuilder: (context, error, stackTrace) => const Icon(Icons.account_circle), // Show placeholder on error
                 ),
               )
-            : const Text(
-                "You",
+            :  Text(
+                "${auth.username}",
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
       ),

@@ -12,7 +12,6 @@ import '../../widgets/pop_up_menu.dart';
 import '../../../data/providers/base_view.dart';
 import '../home/home_page.dart';
 
-// ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
   ChatScreen({super.key});
   ChatViewModel? model;
@@ -22,6 +21,7 @@ class ChatScreen extends StatelessWidget {
     return BaseView<ChatViewModel>(
       onModelReady: (model) {
         this.model = model;
+        model.updateHistory("opened_chat");
       },
       builder: (context, model, child) {
         return SafeArea(
@@ -29,15 +29,12 @@ class ChatScreen extends StatelessWidget {
           onTap: () {
             FocusManager.instance.primaryFocus?.unfocus();
             model.keyboardAppear(false);
-            
           },
           child: Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: AssetImage(
-                      AssetConstant.backGroundImage,
-                    ))),
+                    image: AssetImage(AssetConstant.backGroundImage))),
             child: Scaffold(
               backgroundColor: ColorConstants.transparent,
               body: buildBody(context),
@@ -59,14 +56,16 @@ class ChatScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(30)),
-                child: IconButton(onPressed: (){
-                 Navigator.of(context).pop();
-                }, icon: const Icon(Icons.arrow_back_ios_new),),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(Icons.arrow_back_ios_new),
+                ),
               ),
             ),
-            
             _buildNeviAvatar(),
-            const SizedBox(width: 10,),
+            const SizedBox(width: 10),
             CommonText(
               text: 'Chat With Nevi',
               color: ColorConstants.white,
@@ -78,13 +77,11 @@ class ChatScreen extends StatelessWidget {
         CommonSizedBox(height: 20),
         buildChatMessage(),
         MessageField(
-            chatViewModel: model,
-            onClipTap: () {
-              _showPicker(context);
-              
-            },
-            ),
-        
+          chatViewModel: model,
+          onClipTap: () {
+            _showPicker(context);
+          },
+        ),
       ],
     );
   }
@@ -112,28 +109,29 @@ class ChatScreen extends StatelessWidget {
 
   _showPicker(context) {
     showModalBottomSheet(
-        backgroundColor: ColorConstants.transparent,
-        context: context,
-        builder: (BuildContext context) {
-          return PopUpMenuWidget(
-            onTapCamera: () {
-              model?.imgFromDevice(ImageSource.camera);
-              Navigator.pop(context);
-            },
-            onTapGalley: () {
-              model?.imgFromDevice(ImageSource.gallery);
-              Navigator.pop(context);
-            },
-          );
-        });
+      backgroundColor: ColorConstants.transparent,
+      context: context,
+      builder: (BuildContext context) {
+        return PopUpMenuWidget(
+          onTapCamera: () {
+            model?.imgFromDevice(ImageSource.camera);
+            Navigator.pop(context);
+          },
+          onTapGalley: () {
+            model?.imgFromDevice(ImageSource.gallery);
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
   }
-  
+
   Widget _buildNeviAvatar() {
     return const SizedBox(
       height: 37,
       width: 37,
       child: CircleAvatar(
-        backgroundImage:  AssetImage(AssetConstant.nevilogo),
+        backgroundImage: AssetImage(AssetConstant.nevilogo),
       ),
     );
   }

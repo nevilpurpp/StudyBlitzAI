@@ -37,9 +37,12 @@ dependencies:
   cloud_firestore: ^4.17.4
   fluttertoast: ^8.2.5
   hive: ^2.2.3
+  hive_flutter: ^1.1.0
   easy_quiz_game: ^1.0.1
 
 dev_dependencies:
+  hive_generator: ^2.0.1
+  build_runner: ^2.4.11
   flutter_test:
     sdk: flutter
 

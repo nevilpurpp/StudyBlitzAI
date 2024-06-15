@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nevilai/app/core/constants/assets_constant.dart';
+import 'package:nevilai/app/data/hive_adapter/user_history.dart';
 import 'package:nevilai/app/data/providers/viewmodel/auth_view_model.dart';
-import 'package:nevilai/app/ui/screens/home/home_widget/app_bar.dart';
 import 'package:nevilai/app/ui/screens/home/home_widget/custom_card.dart';
 import '../../../routes/routes.dart';
 
@@ -142,10 +142,32 @@ class _HomePageState extends State<HomePage> {
                   ),),
                 )
               ],
-            )
+            ),
+           buildHistory()
           ],
         ),
       ),
     );
   }
-}
+
+  Widget buildHistory(){
+   return ValueListenableBuilder(
+    valueListenable: Hive.box<UserHistory>('history').listenable(),
+    builder: (context, Box<UserHistory> box, _){
+  if (box.values.isEmpty) {
+            return Center(
+              child: Text('No history available.'),
+            );
+          }
+   return ListView.builder(
+    itemCount: box.length,
+    itemBuilder: (context, index){
+      final history = box.getAt(index);
+         return ListTile(
+                title: Text(history?.action ?? 'No action'),
+                subtitle: Text(history?.timestamp.toString() ?? 'No timestamp'),
+              );
+    });
+
+    });
+  }}

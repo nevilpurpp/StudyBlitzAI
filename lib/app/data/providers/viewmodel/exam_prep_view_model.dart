@@ -52,8 +52,9 @@ String constructPrompt(){
       item["answer"],
       incorrectAnswers: item["incorrect_answers"] ?? [],
     ));
+    questions = questions;
   }
-  
+   print(questions);
     updateUI(); // Update UI with the retrieved summary
     notifyListeners();
     
@@ -64,6 +65,7 @@ String constructPrompt(){
       print("Error generating summary: $error");
     }
        }
-       return questions;
+     return questions;
+      
   }
 }

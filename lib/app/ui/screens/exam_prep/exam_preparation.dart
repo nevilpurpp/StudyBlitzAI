@@ -1,11 +1,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:nevilai/app/data/providers/viewmodel/exam_prep_view_model.dart';
+import 'package:path/path.dart';
 
 import '../../../core/theme/my_app_colors.dart';
 import '../../../data/providers/base_view.dart';
+import '../../../routes/routes.dart';
 import '../../widgets/common_sized_box.dart';
 import '../../widgets/common_text.dart';
+import '../../widgets/common_text_form_field.dart';
 
 // ignore: must_be_immutable
 class ExamPreparation extends StatelessWidget {
@@ -55,10 +58,45 @@ class ExamPreparation extends StatelessWidget {
               fontSize: 22,
               fontWeight: FontWeight.w400,
             ),
+            
           ],
         ),
-
+Form(child: 
+    Column(
+      children: [
+         //unit/subject
+             CommonTextFormField(
+              controller: model!.subjectController,
+              hintTextWidget: 'enter subject/unit',
+             ),
+             CommonSizedBox(
+              height: 20,
+             ),
+             // enter topic
+             CommonTextFormField(
+              controller: model!.topicController,
+              hintTextWidget: 'enter topic',
+             ),
+             CommonSizedBox(
+              height: 20,
+             ), 
+               //send data
+             ElevatedButton(
+              onPressed: () async{
+                 model!.constructPrompt();
+                
+                 const Center(child: CircularProgressIndicator.adaptive(),);
+                await Navigator.pushNamed(context, Routes.quizRoute);
+                //Navigator.pushNamed(context, '/home');
+              },
+              child: const Text('Submit'),
+             ),
+           
+      ],
+    )
+    )
       ],
     );
   }
+
 }
