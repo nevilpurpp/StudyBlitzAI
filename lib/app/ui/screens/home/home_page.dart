@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                       CustomCard(
                         title: 'topic\nSummarizer', 
                         imagePath: AssetConstant.topicIcon,
-                        color: Color(0xFFFEC4DD), 
+                        color: const Color(0xFFFEC4DD), 
                         isMainButton: false,
                          onPressed: () { 
                           Navigator.pushNamed(context, Routes.topicRoute);
@@ -151,23 +151,36 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildHistory(){
-   return ValueListenableBuilder(
-    valueListenable: Hive.box<UserHistory>('history').listenable(),
-    builder: (context, Box<UserHistory> box, _){
-  if (box.values.isEmpty) {
-            return Center(
-              child: Text('No history available.'),
-            );
-          }
-   return ListView.builder(
-    itemCount: box.length,
-    itemBuilder: (context, index){
-      final history = box.getAt(index);
-         return ListTile(
-                title: Text(history?.action ?? 'No action'),
-                subtitle: Text(history?.timestamp.toString() ?? 'No timestamp'),
-              );
-    });
+   return FutureBuilder(
+        future: Hive.openBox<UserHistory>('historyBox'),
+        builder: (context, AsyncSnapshot<Box<UserHistory>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              final historyBox = snapshot.data!;
+              return ValueListenableBuilder(
+                valueListenable: historyBox.listenable(),
+                builder: (context, Box<UserHistory> box, _) {
+                  if (box.values.isEmpty) {
+                    return const Center(child: Text('No history found.'));
+                  }
 
-    });
+                  return ListView.builder(
+                    itemCount: box.length,
+                    itemBuilder: (context, index) {
+                      final history = box.getAt(index);
+                      return ListTile(
+                        title: Text(history?.action ?? ''),
+                        subtitle: Text(history?.timestamp.toString() ?? ''),
+                      );
+                    },
+                  );
+                },
+              );
+            }
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }}
+       );
   }}

@@ -3,8 +3,17 @@ class QuizQuestion {
   final String answer;
   final List<String> incorrectAnswers;
 
-  QuizQuestion(
-    this.question,
-    this.answer, 
-    {this.incorrectAnswers = const []});
+  QuizQuestion({
+    required this.question,
+    required this.answer,
+    required this.incorrectAnswers
+    });
+
+  factory QuizQuestion.fromJson(Map<String, dynamic> json) {
+    return QuizQuestion(
+      question: json['question'] ?? '',
+      answer: json['answer'] ?? '',
+      incorrectAnswers: List<String>.from(json['incorrect_answers'] ?? []),
+    );
+  }
 }

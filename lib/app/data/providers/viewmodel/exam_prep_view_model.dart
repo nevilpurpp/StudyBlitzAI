@@ -15,7 +15,10 @@ GoogleGenerativeServices generativeServices = GoogleGenerativeServices();
   String? topic;
   String? subject;
   //String? difficulty;
-  var questions = [];
+   List<QuizQuestion> questions = [];
+  Map<int, String?> selectedAnswers = {};
+  int correctAnswers = 0;
+  int incorrectAnswers = 0;
 
   keyboard(bool value){
   Function(bool value) keyboard = ChatViewModel().keyboardAppear;
@@ -25,39 +28,39 @@ GoogleGenerativeServices generativeServices = GoogleGenerativeServices();
 String constructPrompt(){
    String topic = topicController.text;
     String subject = subjectController.text;
-   String prompt = '''
+   return  '''
     You will be given a subject and a topic. Your aim is to generate questions and answers in a list dictionary.
     the questions are mutliple choice, so you will generate the question, the answer and 3 incorrect answers.
     Here is an example of how your response should look like.
-    [
-    {"question" : "what is biology?"},
-    {"answer" : "it is the study of living organisms"},
-    {"incorrect_answers" : [
-    "it is study of animals", "study of soil" , "study of marine life", "eating of animals"]}]
+   [
+  {
+    "question": "What is biology?",
+    "answer": "It is the study of living organisms",
+    "incorrect_answers": ["It is study of animals", "Study of soil", "Study of marine life", "Eating of animals"]
+  },
+  {
+    "question": "What is mathematics?",
+    "answer": "It is the study of numbers, shapes, and quantities",
+    "incorrect_answers": ["It is study of animals", "Study of soil", "Study of marine life", "Eating of animals"]
+  }
+]
+
      the subject is $subject, topic is $topic
      just output what is expected, don't add any introduction
     ''';
 
 
-    return prompt;
+   
   }
 
   Future<List> generateQuestions()async {
     try{
-     var questionsResponse = await generativeServices.getText(constructPrompt());
-    List<Map<String, dynamic>> data = questionsResponse as List<Map<String, dynamic>>;
-   for (var item in data) {
-    questions.add(QuizQuestion(
-      item["question"],
-      item["answer"],
-      incorrectAnswers: item["incorrect_answers"] ?? [],
-    ));
-    questions = questions;
-  }
-   print(questions);
+         final questionsResponse = await generativeServices.getquiz(constructPrompt());
+      questions = questionsResponse.map((item) => QuizQuestion.fromJson(item)).toList();
+  
     updateUI(); // Update UI with the retrieved summary
     notifyListeners();
-    
+    return questions;
        } catch(error){
         // Handle potential errors during API call
     AppUtils.showError('$error');
@@ -65,7 +68,26 @@ String constructPrompt(){
       print("Error generating summary: $error");
     }
        }
-     return questions;
+     return [];
       
+  }
+    void evaluateAnswers() {
+    correctAnswers = 0;
+    incorrectAnswers = 0;
+    for (int i = 0; i < questions.length; i++) {
+      String? selectedAnswer = selectedAnswers[i];
+      if (selectedAnswer == questions[i].answer) {
+        correctAnswers++;
+      } else {
+        incorrectAnswers++;
+      }
+    }
+  }
+
+  void resetQuiz() {
+    questions.clear();
+    selectedAnswers.clear();
+    correctAnswers = 0;
+    incorrectAnswers = 0;
   }
 }
