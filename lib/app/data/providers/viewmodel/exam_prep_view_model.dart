@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nevilai/app/data/models/quiz_question_model.dart';
 import '../../../core/utils/utils.dart';
 import '../../middleware/api_services.dart';
+import 'auth_view_model.dart';
 import 'base_model.dart';
 import 'chat_view_model.dart';
 
@@ -11,9 +13,12 @@ class ExamPrepViewModel extends BaseModel {
 TextEditingController topicController = TextEditingController();
 TextEditingController subjectController = TextEditingController();
 GoogleGenerativeServices generativeServices = GoogleGenerativeServices();
+FirebaseFirestore firestore = FirebaseFirestore.instance;
+AuthViewModel auth = AuthViewModel();
 
   String? topic;
   String? subject;
+  late final String username;
   //String? difficulty;
    List<QuizQuestion> questions = [];
   Map<int, String?> selectedAnswers = {};
@@ -89,5 +94,66 @@ String constructPrompt(){
     selectedAnswers.clear();
     correctAnswers = 0;
     incorrectAnswers = 0;
+  }
+
+  Future<void> saveQuizToFirestore() async {
+   /*
+   if (auth == null || auth!.user == null || auth!.user.uid == null) {
+    print('User authentication data is not available.');
+    return;
+  }*/
+    try {
+      await firestore.collection('users').doc(auth.user.uid).collection('quizHistory').add({
+        'subject': subjectController.text,
+        'topic': topicController.text,
+        'questions': questions.map((q) => q.toJson()).toList(),
+        'selectedAnswers': selectedAnswers.map((key, value) => MapEntry(key.toString(), value)),
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      AppUtils.showSuccess('Quiz saved to Firestore');
+      if (kDebugMode) {
+        print('Quiz saved to Firestore');
+      }
+    } catch (e) {
+      AppUtils.showError('Error saving quiz to Firestore: $e');
+      if (kDebugMode) {
+        print('Error saving quiz to Firestore: $e');
+      }
+    }
+  }
+}
+
+extension on QuizQuestion {
+  Map<String, dynamic> toJson() {
+    return {
+      'question': question,
+      'answer': answer,
+      'incorrect_answers': incorrectAnswers,
+    };
+  }
+}
+
+class FirestoreService {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Future<void> saveQuizToFirestore({
+    required String username,
+    required String subject,
+    required String topic,
+    required List<Map<String, dynamic>> questions,
+    required Map<String, String?> selectedAnswers,
+  }) async {
+    try {
+      await firestore.collection(username).doc().collection('quizHistory').add({
+        'subject': subject,
+        'topic': topic,
+        'questions': questions,
+        'selectedAnswers': selectedAnswers,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      print('Quiz saved to Firestore');
+    } catch (e) {
+      print('Error saving quiz to Firestore: $e');
+    }
   }
 }

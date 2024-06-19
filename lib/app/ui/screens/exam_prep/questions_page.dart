@@ -79,13 +79,14 @@ class _QuestionsPageState extends State<QuestionsPage> {
         ),
         if (!submitted)
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               setState(() {
                 submitted = true;
                 score = calculateScore();
-                //saveQuizHistory();
-                _showResultsDialog(context);
+     
               });
+             await model.saveQuizToFirestore();
+                _showResultsDialog(context);
             },
             child: const Text('Submit'),
           ),

@@ -1,16 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:nevilai/app/data/providers/viewmodel/exam_prep_view_model.dart';
 import '../../../core/utils/utils.dart';
-import '../../../data/hive_adapter/quiz_history.dart';
 import '../../../data/providers/base_view.dart';
+import '../../../data/providers/viewmodel/auth_view_model.dart';
 import '../../../routes/routes.dart';
 import '../../widgets/common_sized_box.dart';
 import '../../widgets/common_text_form_field.dart';
 import 'quiz_detail.dart';
 
+// ignore: must_be_immutable
 class ExamPreparation extends StatelessWidget {
-  ExamPreparation({Key? key}) : super(key: key);
+   ExamPreparation({Key? key, }) : super(key: key);
+AuthViewModel auth = AuthViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +71,8 @@ class ExamPreparation extends StatelessWidget {
                 ),
 
                 //display historypage
+                const Text('Recent Activity'),
+                Expanded(child: buildQuizHistory())
               ],
             ),
           ),
@@ -79,41 +83,35 @@ class ExamPreparation extends StatelessWidget {
 
   Widget buildQuizHistory(){
     return
-    FutureBuilder(
-        future: Hive.openBox('quizHistory'),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else {
-              var box = snapshot.data as Box;
-              return ListView.builder(
-                itemCount: box.length,
-                itemBuilder: (context, index) {
-                  var quiz = box.getAt(index) as Map;
-                  var questions = quiz['questions'] as List<QuizQuestion>;
-                  var answers = quiz['answers'] as List<UserAnswer>;
-                  return ListTile(
-                    title: Text('Quiz ${index + 1}'),
-                    subtitle: Text('Subject: ${questions[0].question}'), // Adjust to show subject/topic
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => QuizDetailPage(
-                            questions: questions,
-                            answers: answers,
-                          ),
-                        ),
-                      );
-                    },
+   StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('users').doc(auth.user.uid).collection('quizHistory').orderBy('timestamp', descending: true).snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              var data = snapshot.data!.docs[index];
+               Timestamp timestamp = data['timestamp']; // Assuming 'timestamp' is a field in your Firestore document
+              DateTime dateTime = timestamp.toDate();
+              return ListTile(
+                title: Text('Quiz ${index + 1} - ${data['subject']}'),
+                subtitle: Text('Topic: ${data['topic']}'),
+                 trailing: Text(
+                  '${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour}:${dateTime.minute}',
+                  style: TextStyle(fontSize: 12.0, color: Colors.grey),),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuizDetailPage(data: data),
+                    ),
                   );
                 },
               );
-            }
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
+            },
+          );
         },
       );
   }

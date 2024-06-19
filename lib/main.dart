@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'app/data/hive_adapter/chat_model.dart';
-import 'app/data/hive_adapter/quiz_history.dart';
 import 'app/data/hive_adapter/user_history.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +17,6 @@ void main() async {
   Hive.init(appDocumentDirectory.path);
    Hive.registerAdapter(ChatModelAdapter());
   Hive.registerAdapter(UserHistoryAdapter());
-  Hive.registerAdapter(QuizQuestionAdapter());
-  Hive.registerAdapter(UserAnswerAdapter());
   await Hive.openBox<ChatModel>('chatBox');
   //await Hive.openBox('quizHistory');
  // await Hive.openBox<UserHistory>('historyBox');
