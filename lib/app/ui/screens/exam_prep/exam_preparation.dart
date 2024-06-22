@@ -93,14 +93,16 @@ AuthViewModel auth = AuthViewModel();
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var data = snapshot.data!.docs[index];
-               Timestamp timestamp = data['timestamp']; // Assuming 'timestamp' is a field in your Firestore document
-              DateTime dateTime = timestamp.toDate();
+               //Timestamp timestamp = data['timestamp'] ?? 0; // Assuming 'timestamp' is a field in your Firestore document
+             // DateTime dateTime = timestamp.toDate();
               return ListTile(
                 title: Text('Quiz ${index + 1} - ${data['subject']}'),
                 subtitle: Text('Topic: ${data['topic']}'),
+                 /*
                  trailing: Text(
                   '${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour}:${dateTime.minute}',
-                  style: TextStyle(fontSize: 12.0, color: Colors.grey),),
+                  style: const TextStyle(fontSize: 12.0, color: Colors.grey),),
+                  */
                 onTap: () {
                   Navigator.push(
                     context,

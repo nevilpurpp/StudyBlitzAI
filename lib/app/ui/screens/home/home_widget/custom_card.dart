@@ -66,7 +66,7 @@ class CustomCard extends StatelessWidget {
               style: TextStyle(
                 color: Colors.black45
                 ,
-                fontSize: isMainButton ? 32 :20,
+                fontSize: isMainButton ? 32 :17,
               ),
             ),
           ),
