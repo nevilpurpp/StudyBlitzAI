@@ -41,9 +41,6 @@ StudyBlitzAI is committed to continuous evolution and improvement, aspiring to b
 
 This repository currently hosts the source code for the StudyBlitzAI Student Virtual Assistant application. While detailed deployment and usage instructions are pending, developers can set up the environment to explore the source code. Stay tuned for future updates, which will include comprehensive documentation and deployment guidelines.
 
-## Contributing
-
-We welcome contributions from the developer community! If you're interested in contributing to the development of StudyBlitzAI, please refer to the CONTRIBUTION.md file for guidelines and details.
 
 ---
 
