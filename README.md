@@ -1,5 +1,5 @@
 
-# StudyBlitzAI Student Virtual Assistant with Gemini Integration
+# StudyBlitzAI - Student Virtual Assistant with Gemini Integration
 
 ## Introduction
 
