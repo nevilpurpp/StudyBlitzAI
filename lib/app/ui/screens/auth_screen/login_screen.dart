@@ -39,12 +39,11 @@ class LoginScreen extends StatelessWidget {
     child: Form(child: 
     Column(
       children: [
-        const SizedBox(height: 20,),
+        const SizedBox(height: 80,),
         SizedBox(
         height: 100,
         width: 100,
-          child: Image.asset(AssetConstant.bookIcon,
-          color: Colors.blue ,
+          child: Image.asset(AssetConstant.applogo,
           fit: BoxFit.contain),
         ),
        const  SizedBox(height: 20,),
@@ -144,6 +143,7 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text('Dont have an account?'),
+              SizedBox(width: 10),
               GestureDetector(
                 onTap: (){
            Navigator.pushNamed(context, Routes.registerRoute);

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nevilai/app/data/providers/viewmodel/onboarding_view_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../data/providers/base_view.dart';
+import '../../../routes/routes.dart';  // Ensure this path is correct
 
 class Onboardscreen extends StatefulWidget {
   const Onboardscreen({super.key});
@@ -23,14 +25,16 @@ class _OnboardscreenState extends State<Onboardscreen> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
     super.dispose();
   }
-
+  Future<void> completeOnboarding() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboardingComplete', true);
+  }
   @override
   Widget build(BuildContext context) {
     return BaseView<OnboardingViewModel>(
       onModelReady: (model) {},
       builder: (context, model, child) {
         return Scaffold(
-          
           body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Stack(
@@ -38,13 +42,16 @@ class _OnboardscreenState extends State<Onboardscreen> {
                 Align(
                   alignment: Alignment.topRight,
                   child: TextButton(
-                    onPressed: () {
-                      // Handle skip action
+                    onPressed: () async{
+                      await completeOnboarding();
+                      // Navigate to the authentication screen
+                      Navigator.pushReplacementNamed(context, Routes.authRoute);
                     },
                     child: const Text('Skip'),
                   ),
                 ),
                 PageView.builder(
+                  controller: model.pageController,
                   itemCount: model.demoData.length,
                   scrollDirection: Axis.horizontal,
                   onPageChanged: (index) {
@@ -54,9 +61,8 @@ class _OnboardscreenState extends State<Onboardscreen> {
                     final data = model.demoData[index];
                     return Column(
                       children: [
-                        const SizedBox(height: 50),
                         SvgPicture.asset(data.image),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 10),
                         Text(
                           data.title,
                           style: const TextStyle(fontSize: 35),
@@ -78,11 +84,28 @@ class _OnboardscreenState extends State<Onboardscreen> {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Handle get started action
-                          },
-                          child: const Text('Get Started'),
+                        child: SizedBox(
+                          height: 50,
+                          width: 200,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              if (model.currentPage == model.demoData.length - 1) {
+                                await completeOnboarding();
+                                Navigator.pushReplacementNamed(context, Routes.authRoute);
+                              } else {
+                                model.pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              }
+                            },
+                            child: Text(
+                              model.currentPage == model.demoData.length - 1
+                                  ? 'Get Started'
+                                  : 'Next',
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                          ),
                         ),
                       ),
                       const Expanded(
@@ -104,7 +127,7 @@ class _OnboardscreenState extends State<Onboardscreen> {
                               margin: const EdgeInsets.symmetric(horizontal: 5),
                               decoration: BoxDecoration(
                                 color: model.currentPage == index
-                                    ? Colors.black
+                                    ? Theme.of(context).colorScheme.primary
                                     : Colors.grey,
                                 borderRadius: BorderRadius.circular(5),
                               ),

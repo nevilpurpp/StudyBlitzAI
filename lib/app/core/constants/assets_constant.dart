@@ -10,7 +10,7 @@ static const String pdfIcon = 'assets/icons/file-pdf.png';
 static const String bookIcon = 'assets/icons/book-alt.png';
 static const String profileIcon = 'assets/icons/user.png';
 static const String nevilogo = 'assets/icons/ai.png';
-
+static const String applogo = 'assets/icons/machine-learning.png';
 //social icons
 static const String googleIcon = 'assets/icons/google-symbol.png';
 

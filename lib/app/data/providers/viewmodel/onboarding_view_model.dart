@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../../core/constants/assets_constant.dart';
 import '../../models/onboard_model.dart';
 import 'base_model.dart';
@@ -5,7 +7,7 @@ import 'base_model.dart';
 class OnboardingViewModel extends BaseModel {
   int _currentPage = 0;
   int get currentPage => _currentPage;
-
+PageController pageController = PageController();
   final List<OnBoard> demoData = [
     OnBoard(
       image: AssetConstant.firstImage,
@@ -20,12 +22,17 @@ class OnboardingViewModel extends BaseModel {
     OnBoard(
       image: AssetConstant.thirdImage,
       title: 'Comprehensive Exam Preparation',
-      description: 'Generate tailored multiple-choice questions \nby entering your subject and topic.\n Practice effectively and receive immediate feedback to excel in your exams.',
+      description: 'Generate tailored multiple-choice questions by entering your subject and topic. Practice effectively and receive immediate feedback to excel in your exams.',
     ),
   ];
 
   void setCurrentPage(int page) {
     _currentPage = page;
     notifyListeners();
+  }
+    @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
   }
 }

@@ -17,9 +17,9 @@ class AuthViewModel extends BaseModel{
     
 Stream<User?> get userState => _auth.authStateChanges();
   get user => _auth.currentUser;
-  get username => _auth.currentUser!.displayName;
-  get useremail => _auth.currentUser!.email;
-  get userphoto => _auth.currentUser!.photoURL;
+  get username => _auth.currentUser?.displayName;
+  get useremail => _auth.currentUser?.email;
+  get userphoto => _auth.currentUser?.photoURL;
   keyboard(bool value){
     Function(bool value) keyboard = ChatViewModel().keyboardAppear;
     return keyboard;

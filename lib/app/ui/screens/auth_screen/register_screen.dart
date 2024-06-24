@@ -35,11 +35,11 @@ AuthViewModel? model;
     child: Form(child: 
     Column(
       children: [
-        const SizedBox(height: 20,),
+        const SizedBox(height: 80,),
         SizedBox(
         height: 100,
         width: 100,
-          child: Image.asset(AssetConstant.bookIcon,
+          child: Image.asset(AssetConstant.applogo,
           fit: BoxFit.contain),
         ),
        const  SizedBox(height: 20,),
