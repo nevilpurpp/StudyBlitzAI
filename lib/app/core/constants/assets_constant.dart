@@ -17,4 +17,8 @@ static const String googleIcon = 'assets/icons/google-symbol.png';
 //images  
 static const String backGroundImage = 'assets/images/background.jpg';
 
+//onboarding icons 
+static const String firstImage = 'assets/svg_icons/Learning-amico.svg';
+static const String secondImage = 'assets/svg_icons/Learning-bro.svg';
+static const String thirdImage = 'assets/svg_icons/Learning-rafiki.svg';
 }

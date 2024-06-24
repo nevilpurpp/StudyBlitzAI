@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),      
    
      onGenerateRoute: PageRouter.generateRoute,
-     initialRoute: Routes.authRoute,
+     initialRoute: Routes.onboardRoute,
       home: const HomePage(),
     );
   }
