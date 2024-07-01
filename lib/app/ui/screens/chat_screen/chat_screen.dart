@@ -12,6 +12,7 @@ import '../../widgets/pop_up_menu.dart';
 import '../../../data/providers/base_view.dart';
 import '../home/home_page.dart';
 
+// ignore: must_be_immutable
 class ChatScreen extends StatelessWidget {
   ChatScreen({super.key});
   ChatViewModel? model;

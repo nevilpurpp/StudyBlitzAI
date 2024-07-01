@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '../../../data/models/quiz_question_model.dart';
 import '../../../data/providers/base_view.dart';
@@ -95,6 +97,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
   }
 
   List<Widget> buildOptions(QuizQuestion question, int questionIndex) {
+    Random random =  Random();
     List<Widget> options = [];
 
     for (int i = 0; i < question.incorrectAnswers.length; i++) {
@@ -144,7 +147,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
               },
       ),
     );
-
+   options= random.nextInt(options as int) as List<Widget>;
     return options;
   }
 
