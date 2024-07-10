@@ -85,10 +85,9 @@ class _QuestionsPageState extends State<QuestionsPage> {
               setState(() {
                 submitted = true;
                 score = calculateScore();
-     
               });
-             await model.saveQuizToFirestore();
-                _showResultsDialog(context);
+              await model.saveQuizToFirestore();
+              _showResultsDialog(context);
             },
             child: const Text('Submit'),
           ),
@@ -97,46 +96,21 @@ class _QuestionsPageState extends State<QuestionsPage> {
   }
 
   List<Widget> buildOptions(QuizQuestion question, int questionIndex) {
-    Random random =  Random();
-    List<Widget> options = [];
+    List<String> allOptions = List.from(question.incorrectAnswers)
+      ..add(question.answer);
+    allOptions.shuffle(); // Shuffle the options to place the correct answer randomly
 
-    for (int i = 0; i < question.incorrectAnswers.length; i++) {
-      options.add(
-        RadioListTile<String>(
-          title: Text(
-            question.incorrectAnswers[i],
-            style: TextStyle(
-              color: submitted && selectedAnswers[questionIndex] == question.incorrectAnswers[i]
-                  ? Colors.red
-                  : null,
-            ),
-          ),
-          value: question.incorrectAnswers[i],
-          groupValue: selectedAnswers[questionIndex],
-          onChanged: submitted
-              ? null
-              : (value) {
-                  setState(() {
-                    selectedAnswers[questionIndex] = value;
-                  });
-                },
-        ),
-      );
-    }
-
-    options.add(
-      RadioListTile<String>(
+    List<Widget> options = allOptions.map((option) {
+      return RadioListTile<String>(
         title: Text(
-          question.answer,
+          option,
           style: TextStyle(
-            color: submitted && selectedAnswers[questionIndex] == question.answer
-                ? Colors.green
-                : (submitted && selectedAnswers[questionIndex] != question.answer
-                    ? Colors.orange
-                    : null),
+            color: submitted && selectedAnswers[questionIndex] == option
+                ? (option == question.answer ? Colors.green : Colors.red)
+                : null,
           ),
         ),
-        value: question.answer,
+        value: option,
         groupValue: selectedAnswers[questionIndex],
         onChanged: submitted
             ? null
@@ -145,9 +119,9 @@ class _QuestionsPageState extends State<QuestionsPage> {
                   selectedAnswers[questionIndex] = value;
                 });
               },
-      ),
-    );
-   options= random.nextInt(options as int) as List<Widget>;
+      );
+    }).toList();
+
     return options;
   }
 
@@ -167,18 +141,17 @@ class _QuestionsPageState extends State<QuestionsPage> {
           ],
           content: Padding(
             padding: const EdgeInsets.all(10.0),
-          
-            child:  Text(
+            child: Text(
               'Your score: $score/${model.questions.length}',
-              style:  TextStyle(fontSize: 18.0,
-               fontWeight: FontWeight.bold,
-               color: score == model.questions.length
-                ? Colors.green
-                : (score >= model.questions.length/2
-                ? Colors.orange
-                : Colors.red)
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                color: score == model.questions.length
+                    ? Colors.green
+                    : (score >= model.questions.length / 2 ? Colors.orange : Colors.red),
+              ),
             ),
-          ),)
+          ),
         );
       },
     );
@@ -193,14 +166,4 @@ class _QuestionsPageState extends State<QuestionsPage> {
     }
     return score;
   }
-/*
-  void saveQuizHistory() async {
-    final box = await Hive.openBox<QuizHistory>('quizHistory');
-    final answers = selectedAnswers.entries
-        .map((entry) => UserAnswer(entry.key, entry.value))
-        .toList();
-    final quizHistory = QuizHistory(questions: model.questions, answers: answers);
-    await box.add(quizHistory);
-  }
-  */
 }

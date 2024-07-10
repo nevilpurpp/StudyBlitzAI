@@ -20,6 +20,19 @@ Stream<User?> get userState => _auth.authStateChanges();
   get username => _auth.currentUser?.displayName;
   get useremail => _auth.currentUser?.email;
   get userphoto => _auth.currentUser?.photoURL;
+
+
+ // get courses from Firestore
+  Stream<QuerySnapshot> getCourses() {
+    return _firestore.collection('courses').snapshots();
+  }
+ 
+  // get modules for a specific course
+  Stream<QuerySnapshot> getModules(String course) {
+    return _firestore.collection('courses').doc().collection('modules').snapshots();
+  }
+
+
   keyboard(bool value){
     Function(bool value) keyboard = ChatViewModel().keyboardAppear;
     return keyboard;
@@ -29,8 +42,8 @@ Stream<User?> get userState => _auth.authStateChanges();
     _auth.authStateChanges().listen(user);
   }
 
-  Future<UserCredential?> registerWithEmailAndPassword(
-      String name, String email, String password) async {
+    Future<UserCredential?> registerWithEmailAndPassword(
+      String name, String email, String password, String courseId, String moduleId) async {
     if (!AppUtils.validateEmail(email)) {
       AppUtils.showError('Please enter a valid email address.');
       return null;
@@ -45,13 +58,16 @@ Stream<User?> get userState => _auth.authStateChanges();
       final credential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
+      
       );
 
-      // Store user data in Firestore (optional)
+      // Store user data in Firestore (including the selected course and module)
       final userDoc = _firestore.collection('users').doc(credential.user!.uid);
       await userDoc.set({
         'name': name,
         'email': email,
+        'courseId': courseId,
+        'moduleId': moduleId,
         // Add other relevant user data fields
       });
 
@@ -64,6 +80,7 @@ Stream<User?> get userState => _auth.authStateChanges();
       return null;
     }
   }
+  
 
   //SIGN IN METHOD
     Future<UserCredential?> signInWithEmailAndPassword(
