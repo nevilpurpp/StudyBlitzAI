@@ -15,7 +15,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   String? _selectedCourseId;
-  String? _selectedModuleId;
+ 
   AuthViewModel? model;
 
   @override
@@ -124,43 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 );
               },
             ),
-            const SizedBox(height: 10),
-            // Module Dropdown
-            if (_selectedCourseId != null)
-              StreamBuilder<QuerySnapshot>(
-                stream: model!.getModules(_selectedCourseId!),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const CircularProgressIndicator();
-                  }
-
-                  var modules = snapshot.data!.docs;
-                  return DropdownButtonFormField<String>(
-                    decoration: const InputDecoration(
-                      labelText: 'Module',
-                      prefixIcon: Icon(Icons.layers),
-                    ),
-                    value: _selectedModuleId,
-                    items: modules.map((module) {
-                      return DropdownMenuItem<String>(
-                        value: module.id,
-                        child: Text(module['moduleName']),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedModuleId = value;
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please select a module';
-                      }
-                      return null;
-                    },
-                  );
-                },
-              ),
+        
             const SizedBox(height: 10),
             // Register Button
             Padding(
@@ -190,7 +154,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       email,
                       password,
                       _selectedCourseId!,
-                      _selectedModuleId!,
+                      
                     );
                     if (credential != null) {
                       // Handle successful registration (navigate to home?)
