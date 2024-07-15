@@ -30,7 +30,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
           child: GestureDetector(
             onTap: () {
               FocusManager.instance.primaryFocus?.unfocus();
-              model.keyboard(false);
+              //model.keyboard(false);
             },
             child: Scaffold(
               appBar: AppBar(

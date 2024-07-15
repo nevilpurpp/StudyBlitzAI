@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nevilai/app/core/constants/assets_constant.dart';
-import 'package:nevilai/app/data/hive_adapter/user_history.dart';
 import 'package:nevilai/app/data/providers/viewmodel/auth_view_model.dart';
 import 'package:nevilai/app/ui/screens/home/home_widget/custom_card.dart';
 import '../../../routes/routes.dart';
@@ -27,8 +25,6 @@ class _HomePageState extends State<HomePage> {
           children: [
             _buildWelcomeSection(),
             _buildMainButtonsSection(),
-            _buildHistorySection(),
-            Expanded(child: _buildHistory()),
           ],
         ),
       ),
@@ -48,7 +44,7 @@ class _HomePageState extends State<HomePage> {
             width: 30,
           ),
           const SizedBox(width: 10),
-          const Text('Nevi Virtual Assistant'),
+          const Text('Study Blitz'),
         ],
       ),
       automaticallyImplyLeading: false,
@@ -57,173 +53,106 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildWelcomeSection() {
-    return SizedBox(
-      height: 200,
-      width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 1),
-            Row(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white10,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.profileRoute);
+            },
+            child: Row(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.profileRoute);
-                  },
-                  child: authViewModel.userphoto != null
-                      ? CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(authViewModel.userphoto),
-                        )
-                      : const SizedBox(
-                          height: 50,
-                          width: 50,
-                          child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            backgroundImage: AssetImage(AssetConstant.profileIcon),
-                          ),
-                        ),
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: authViewModel.userphoto != null
+                      ? NetworkImage(authViewModel.userphoto) as ImageProvider
+                      : const AssetImage(AssetConstant.profileIcon),
+                  backgroundColor: Colors.white,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
+                const SizedBox(width: 10),
+                Expanded(
                   child: Text(
-                      ' Hello, ${authViewModel.username ?? 'Welcome!'}',
-                      style: const TextStyle(
-                      fontSize: 17,
+                    'Hello, ${authViewModel.username ?? 'Welcome!'}',
+                    style: const TextStyle(
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ],
             ),
-            const Text(
-              'Ace your exams\nwith the ultimate study buddy,',
-                style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.white60,
-              ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'Ace your exams with the ultimate study buddy.',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white70,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildMainButtonsSection() {
     return SizedBox(
-      height: 340,
+      height: 550,
       width: double.infinity,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        padding: const EdgeInsets.all(5.0),
+        child: Column(
           children: [
-            Expanded(
+            Padding(
+              padding: const EdgeInsets.all(13.0),
               child: CustomCard(
-                title: 'Chat\nwith AI',
+                title: 'Exam Preparation',
+                imagePath: AssetConstant.examprepIcon,
+                color: const Color(0xFFC09FF8),
+                isMainButton: false,
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.examRoute);
+                },
+              ),
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.all(13.0),
+              child: CustomCard(
+                title: 'Chat with AI',
                 imagePath: AssetConstant.chatIcon,
                 color: const Color(0xFFC5F432),
-                isMainButton: true,
+                isMainButton: false,
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.chatRoute);
                 },
               ),
             ),
-            Expanded(
-              child: Column(
-                children: [
-                  CustomCard(
-                    title: 'Exam\nPreparation',
-                    imagePath: AssetConstant.examprepIcon,
-                    color: const Color(0xFFC09FF8),
-                    isMainButton: false,
-                    onPressed: () {
-                      Navigator.pushNamed(context, Routes.examRoute);
-                    },
-                  ),
-                  const SizedBox(height: 8),
-                  CustomCard(
-                    title: 'Topic\nSummarizer',
-                    imagePath: AssetConstant.topicIcon,
-                    color: const Color(0xFFFEC4DD),
-                    isMainButton: false,
-                    onPressed: () {
-                      Navigator.pushNamed(context, Routes.topicRoute);
-                    },
-                  ),
-                ],
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.all(13.0),
+              child: CustomCard(
+                title: 'Topic Summarizer',
+                imagePath: AssetConstant.topicIcon,
+                color: const Color(0xFFFEC4DD),
+                isMainButton: false,
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.topicRoute);
+                },
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildHistorySection() {
-    return const Row(
-      children: [
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            'History',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-        Spacer(),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            'See all',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildHistory() {
-    return FutureBuilder(
-      future: Hive.openBox<UserHistory>('historyBox'),
-      builder: (context, AsyncSnapshot<Box<UserHistory>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            final historyBox = snapshot.data!;
-            return ValueListenableBuilder(
-              valueListenable: historyBox.listenable(),
-              builder: (context, Box<UserHistory> box, _) {
-                if (box.values.isEmpty) {
-                  return const Center(child: Text('No history found.'));
-                }
-
-                return ListView.builder(
-                  itemCount: box.length,
-                  itemBuilder: (context, index) {
-                    final history = box.getAt(index);
-                    return ListTile(
-                      title: Text(history?.action ?? ''),
-                      subtitle: Text(history?.timestamp.toString() ?? ''),
-                    );
-                  },
-                );
-              },
-            );
-          }
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
     );
   }
 }

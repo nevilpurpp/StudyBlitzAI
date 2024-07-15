@@ -19,8 +19,8 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 150,
-      height: isMainButton ? 300 : 150, 
+      width: 365,
+      height: 142, 
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -31,17 +31,18 @@ class CustomCard extends StatelessWidget {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween ,
               children: [
                 CircleAvatar(
                   backgroundColor: Colors.grey.withOpacity(0.2),
                   child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Image.asset(
+                    padding: const EdgeInsets.all(5),
+                    child: Image.asset(height: 30,
+                    width: 30,
                       imagePath,
                     ),
                   ),
@@ -49,20 +50,21 @@ class CustomCard extends StatelessWidget {
                 const Icon(
                   CupertinoIcons.arrow_up_right,
                   color: Colors.black38,
-                  size: 32,
+                  size: 30,
                 ),
               ],
             ),
-            SizedBox(
-              height: isMainButton ? 50 : 8,
+            const SizedBox(
+              height: 22,
             ),
             Align(
               alignment: Alignment.bottomLeft,
               child: Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
+                
                   color: Colors.black45,
-                  fontSize: isMainButton ? 32 : 17,
+                  fontSize:  23,
                 ),
               ),
             ),

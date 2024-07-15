@@ -20,6 +20,7 @@ Stream<User?> get userState => _auth.authStateChanges();
   get username => _auth.currentUser?.displayName;
   get useremail => _auth.currentUser?.email;
   get userphoto => _auth.currentUser?.photoURL;
+  get useriid => _auth.currentUser?.uid;
 
 
  // get courses from Firestore
@@ -43,7 +44,7 @@ Stream<User?> get userState => _auth.authStateChanges();
   }
 
     Future<UserCredential?> registerWithEmailAndPassword(
-      String name, String email, String password, String courseId, String moduleId) async {
+      String name, String email, String password, String courseId,) async {
     if (!AppUtils.validateEmail(email)) {
       AppUtils.showError('Please enter a valid email address.');
       return null;
@@ -67,7 +68,7 @@ Stream<User?> get userState => _auth.authStateChanges();
         'name': name,
         'email': email,
         'courseId': courseId,
-        'moduleId': moduleId,
+       
         // Add other relevant user data fields
       });
 
@@ -183,4 +184,25 @@ Future<UserCredential> signInWithGoogle() async {
 
   }
    }
+
+    Future<DocumentSnapshot> getUserDetails() async {
+    final user = _auth.currentUser;
+    if (user != null) {
+      final userDoc = await _firestore.collection('users').doc(user.uid).get();
+      return userDoc;
+    } else {
+      throw Exception('No user logged in');
+    }
+  }
+
+  Future<DocumentSnapshot> getCourseDetails(String courseId) async {
+    final courseDoc = await _firestore.collection('courses').doc(courseId).get();
+    return courseDoc;
+  }
+fetchUserCourseid() async {   
+      final userDoc = await getUserDetails();
+      String courseId = userDoc['courseId'];
+      return courseId.toString();
+}
+
 }

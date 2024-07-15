@@ -9,74 +9,72 @@ import 'base_model.dart';
 import 'chat_view_model.dart';
 
 class ExamPrepViewModel extends BaseModel {
+  TextEditingController topicController = TextEditingController();
+  String? selectedSubject;
+  GoogleGenerativeServices generativeServices = GoogleGenerativeServices();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  AuthViewModel auth = AuthViewModel();
 
-TextEditingController topicController = TextEditingController();
-TextEditingController subjectController = TextEditingController();
-GoogleGenerativeServices generativeServices = GoogleGenerativeServices();
-FirebaseFirestore firestore = FirebaseFirestore.instance;
-AuthViewModel auth = AuthViewModel();
-
-  String? topic;
-  String? subject;
-  late final String username;
-  //String? difficulty;
-   List<QuizQuestion> questions = [];
+  List<QuizQuestion> questions = [];
   Map<int, String?> selectedAnswers = {};
   int correctAnswers = 0;
   int incorrectAnswers = 0;
 
-  keyboard(bool value){
-  Function(bool value) keyboard = ChatViewModel().keyboardAppear;
-  return keyboard;
+  // Fetch modules for the user's course ID
+  Stream<QuerySnapshot> getModules(String courseId) {
+    print("Fetching modules for course ID: $courseId"); // Debug print
+    return firestore.collection('courses').doc(courseId).collection('modules').snapshots();
   }
 
-String constructPrompt(){
-   String topic = topicController.text;
-    String subject = subjectController.text;
-   return  '''
+  // Fetch subjects based on the selected module
+ Stream<QuerySnapshot<Map<String, dynamic>>> getSubjects(String moduleId) {
+  print("Fetching subjects for module ID: $moduleId"); // Debug print
+ return firestore.collection('modules').doc(moduleId).collection('subjects').snapshots();
+}
+
+  String constructPrompt() {
+    String topic = topicController.text;
+    return '''
     You will be given a subject and a topic. Your aim is to generate questions and answers in a list dictionary.
-    the questions are mutliple choice, so you will generate the question, the answer and 3 incorrect answers.
-    Here is an example of how your response should look like.
+    The questions are multiple choice, so you will generate the question, the answer, and 3 incorrect answers.
+    Here is an example of how your response should look like:
    [
   {
     "question": "What is biology?",
     "answer": "It is the study of living organisms",
-    "incorrect_answers": ["It is study of animals", "Study of soil", "Study of marine life", "Eating of animals"]
+    "incorrect_answers": ["It is the study of animals", "Study of soil", "Study of marine life", "Eating of animals"]
   },
   {
     "question": "What is mathematics?",
     "answer": "It is the study of numbers, shapes, and quantities",
-    "incorrect_answers": ["It is study of animals", "Study of soil", "Study of marine life", "Eating of animals"]
+    "incorrect_answers": ["It is the study of animals", "Study of soil", "Study of marine life", "Eating of animals"]
   }
 ]
 
-     the subject is $subject, topic is $topic
-     just output what is expected, don't add any introduction
+     The subject is $selectedSubject, topic is $topic
+     Just output what is expected, don't add any introduction.
     ''';
-
-
-   
   }
 
-  Future<List> generateQuestions()async {
-    try{
-         final questionsResponse = await generativeServices.getquiz(constructPrompt());
+  Future<List> generateQuestions() async {
+    try {
+      final questionsResponse = await generativeServices.getquiz(constructPrompt());
       questions = questionsResponse.map((item) => QuizQuestion.fromJson(item)).toList();
-  
-    updateUI(); // Update UI with the retrieved summary
-    notifyListeners();
-    return questions;
-       } catch(error){
-        // Handle potential errors during API call
-    AppUtils.showError('$error');
-    if (kDebugMode) {
-      print("Error generating summary: $error");
+
+      updateUI(); // Update UI with the retrieved summary
+      notifyListeners();
+      return questions;
+    } catch (error) {
+      // Handle potential errors during API call
+      AppUtils.showError('$error');
+      if (kDebugMode) {
+        print("Error generating summary: $error");
+      }
     }
-       }
-     return [];
-      
+    return [];
   }
-    void evaluateAnswers() {
+
+  void evaluateAnswers() {
     correctAnswers = 0;
     incorrectAnswers = 0;
     for (int i = 0; i < questions.length; i++) {
@@ -97,14 +95,9 @@ String constructPrompt(){
   }
 
   Future<void> saveQuizToFirestore() async {
-   /*
-   if (auth == null || auth!.user == null || auth!.user.uid == null) {
-    print('User authentication data is not available.');
-    return;
-  }*/
     try {
-      await firestore.collection('users').doc(auth.user.uid).collection('quizHistory').add({
-        'subject': subjectController.text,
+      await firestore.collection('users').doc(auth.user!.uid).collection('quizHistory').add({
+        'subject': selectedSubject,
         'topic': topicController.text,
         'questions': questions.map((q) => q.toJson()).toList(),
         'selectedAnswers': selectedAnswers.map((key, value) => MapEntry(key.toString(), value)),
@@ -130,30 +123,5 @@ extension on QuizQuestion {
       'answer': answer,
       'incorrect_answers': incorrectAnswers,
     };
-  }
-}
-
-class FirestoreService {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  Future<void> saveQuizToFirestore({
-    required String username,
-    required String subject,
-    required String topic,
-    required List<Map<String, dynamic>> questions,
-    required Map<String, String?> selectedAnswers,
-  }) async {
-    try {
-      await firestore.collection(username).doc().collection('quizHistory').add({
-        'subject': subject,
-        'topic': topic,
-        'questions': questions,
-        'selectedAnswers': selectedAnswers,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-      print('Quiz saved to Firestore');
-    } catch (e) {
-      print('Error saving quiz to Firestore: $e');
-    }
   }
 }

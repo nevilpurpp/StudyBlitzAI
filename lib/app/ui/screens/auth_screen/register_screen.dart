@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../core/constants/assets_constant.dart';
 import '../../../data/providers/base_view.dart';
 import '../../../data/providers/viewmodel/auth_view_model.dart';
@@ -8,7 +7,10 @@ import '../../../routes/routes.dart';
 import '../../widgets/common_text_form_field.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
@@ -93,34 +95,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
               stream: model!.getCourses(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
 
                 var courses = snapshot.data!.docs;
-                return DropdownButtonFormField<String>(
-                  decoration: const InputDecoration(
-                    labelText: 'Course',
-                    prefixIcon: Icon(Icons.book),
+                return Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: DropdownButtonFormField<String>(
+                    decoration: const InputDecoration(
+                      labelText: 'Course',
+                      prefixIcon: Icon(Icons.book),
+                    ),
+                    value: _selectedCourseId,
+                    items: courses.map((course) {
+                      return DropdownMenuItem<String>(
+                        value: course.id,
+                        child: Text(course['courseName']),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedCourseId = value;
+                        //_selectedModuleId = null; // Reset module selection
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please select a course';
+                      }
+                      return null;
+                    },
                   ),
-                  value: _selectedCourseId,
-                  items: courses.map((course) {
-                    return DropdownMenuItem<String>(
-                      value: course.id,
-                      child: Text(course['courseName']),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedCourseId = value;
-                      //_selectedModuleId = null; // Reset module selection
-                    });
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return 'Please select a course';
-                    }
-                    return null;
-                  },
                 );
               },
             ),
@@ -142,8 +147,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (name.isEmpty ||
                         email.isEmpty ||
                         password.isEmpty ||
-                        _selectedCourseId == null ||
-                        _selectedModuleId == null) {
+                        _selectedCourseId == null 
+                      ) {
                       // Show error message
                       return;
                     }
@@ -158,6 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     );
                     if (credential != null) {
                       // Handle successful registration (navigate to home?)
+                      // ignore: use_build_context_synchronously
                       Navigator.pushNamed(context, Routes.homeRoute);
                     } else {
                       // Handle registration errors
@@ -177,6 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onPressed: () async {
                     final credential = await model!.signInWithGoogle();
                     if (credential != null) {
+                      // ignore: use_build_context_synchronously
                       Navigator.pushNamed(context, '/home');
                     }
                   },
