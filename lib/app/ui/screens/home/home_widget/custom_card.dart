@@ -10,6 +10,7 @@ class CustomCard extends StatelessWidget {
     required this.onPressed,
     super.key,
   });
+
   final String title;
   final String imagePath;
   final Color color;
@@ -20,7 +21,7 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 365,
-      height: 142, 
+      height: 142,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -30,46 +31,66 @@ class CustomCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(24),
           ),
         ),
-        child: Column(
-          mainAxisAlignment:  MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween ,
+            // Background icon
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Opacity(
+                opacity: 0.1,
+                child: Image.asset(
+                  imagePath,
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            // Foreground content
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  backgroundColor: Colors.grey.withOpacity(0.2),
-                  child: Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Image.asset(height: 30,
-                    width: 30,
-                      imagePath,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.grey.withOpacity(0.2),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Image.asset(
+                          height: 30,
+                          width: 30,
+                          imagePath,
+                        ),
+                      ),
+                    ),
+                    const Icon(
+                      CupertinoIcons.arrow_up_right,
+                      color: Colors.black38,
+                      size: 30,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 22,
+                ),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      color: Colors.black45,
+                      fontSize: 23,
                     ),
                   ),
                 ),
-                const Icon(
-                  CupertinoIcons.arrow_up_right,
-                  color: Colors.black38,
-                  size: 30,
-                ),
               ],
-            ),
-            const SizedBox(
-              height: 22,
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                title,
-                style: const TextStyle(
-                
-                  color: Colors.black45,
-                  fontSize:  23,
-                ),
-              ),
             ),
           ],
         ),
       ),
     );
-  }}
+  }
+}

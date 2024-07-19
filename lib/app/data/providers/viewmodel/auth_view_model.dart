@@ -44,7 +44,7 @@ Stream<User?> get userState => _auth.authStateChanges();
   }
 
     Future<UserCredential?> registerWithEmailAndPassword(
-      String name, String email, String password, String courseId,) async {
+      String name, String email, String password /*String courseId,*/) async {
     if (!AppUtils.validateEmail(email)) {
       AppUtils.showError('Please enter a valid email address.');
       return null;
@@ -66,8 +66,8 @@ Stream<User?> get userState => _auth.authStateChanges();
       final userDoc = _firestore.collection('users').doc(credential.user!.uid);
       await userDoc.set({
         'name': name,
-        'email': email,
-        'courseId': courseId,
+        'email': email
+        //'courseId': courseId,
        
         // Add other relevant user data fields
       });

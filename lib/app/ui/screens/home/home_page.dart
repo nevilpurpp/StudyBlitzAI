@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             _buildWelcomeSection(),
+            const SizedBox(height: 40,),
             _buildMainButtonsSection(),
           ],
         ),
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             width: 30,
           ),
           const SizedBox(width: 10),
-          const Text('Study Blitz'),
+          const Text('Nevi virtual Assistant'),
         ],
       ),
       automaticallyImplyLeading: false,
@@ -55,8 +56,8 @@ class _HomePageState extends State<HomePage> {
   Widget _buildWelcomeSection() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white10,
-        borderRadius: BorderRadius.circular(10),
+        color: Colors.grey.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(24),
       ),
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       padding: const EdgeInsets.all(16),
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                   radius: 25,
                   backgroundImage: authViewModel.userphoto != null
                       ? NetworkImage(authViewModel.userphoto) as ImageProvider
-                      : const AssetImage(AssetConstant.profileIcon),
+                      : const AssetImage(AssetConstant.profileIcon) as ImageProvider,
                   backgroundColor: Colors.white,
                 ),
                 const SizedBox(width: 10),
@@ -124,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.all(13.0),
               child: CustomCard(
@@ -137,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.all(13.0),
               child: CustomCard(

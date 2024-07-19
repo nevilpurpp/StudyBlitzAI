@@ -10,6 +10,7 @@ import 'chat_view_model.dart';
 
 class ExamPrepViewModel extends BaseModel {
   TextEditingController topicController = TextEditingController();
+   TextEditingController subjectController = TextEditingController();
   String? selectedSubject;
   GoogleGenerativeServices generativeServices = GoogleGenerativeServices();
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -34,6 +35,7 @@ class ExamPrepViewModel extends BaseModel {
 
   String constructPrompt() {
     String topic = topicController.text;
+    String subject = subjectController.text;
     return '''
     You will be given a subject and a topic. Your aim is to generate questions and answers in a list dictionary.
     The questions are multiple choice, so you will generate the question, the answer, and 3 incorrect answers.
@@ -51,7 +53,7 @@ class ExamPrepViewModel extends BaseModel {
   }
 ]
 
-     The subject is $selectedSubject, topic is $topic
+     The subject is $subject, topic is $topic
      Just output what is expected, don't add any introduction.
     ''';
   }
@@ -97,7 +99,7 @@ class ExamPrepViewModel extends BaseModel {
   Future<void> saveQuizToFirestore() async {
     try {
       await firestore.collection('users').doc(auth.user!.uid).collection('quizHistory').add({
-        'subject': selectedSubject,
+        'subject': subjectController.text,
         'topic': topicController.text,
         'questions': questions.map((q) => q.toJson()).toList(),
         'selectedAnswers': selectedAnswers.map((key, value) => MapEntry(key.toString(), value)),

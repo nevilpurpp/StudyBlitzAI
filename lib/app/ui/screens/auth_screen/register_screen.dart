@@ -90,6 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               obscureText: true,
             ),
             const SizedBox(height: 10),
+            /*
             // Course Dropdown
             StreamBuilder<QuerySnapshot>(
               stream: model!.getCourses(),
@@ -129,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 );
               },
             ),
-        
+        */
             const SizedBox(height: 10),
             // Register Button
             Padding(
@@ -146,8 +147,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // Perform validation
                     if (name.isEmpty ||
                         email.isEmpty ||
-                        password.isEmpty ||
-                        _selectedCourseId == null 
+                        password.isEmpty 
+                       // _selectedCourseId == null 
                       ) {
                       // Show error message
                       return;
@@ -158,7 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       name,
                       email,
                       password,
-                      _selectedCourseId!,
+                     // _selectedCourseId!,
                       
                     );
                     if (credential != null) {

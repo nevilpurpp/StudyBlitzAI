@@ -20,16 +20,16 @@ class ExamPreparation extends StatefulWidget {
 class _ExamPreparationState extends State<ExamPreparation> {
   AuthViewModel auth = AuthViewModel();
   ExamPrepViewModel model = ExamPrepViewModel();
-  String? _selectedModuleId;
-  String? _selectedSubjectId;
-  String? _courseId;
+ // String? _selectedModuleId;
+  //String? _selectedSubjectId;
+ // String? _courseId;
 
   @override
   void initState() {
     super.initState();
-    fetchUserCourseId();
+   // fetchUserCourseId();
   }
-
+/*
   Future<void> fetchUserCourseId() async {
     try {
       final userDoc = await auth.getUserDetails();
@@ -41,7 +41,7 @@ class _ExamPreparationState extends State<ExamPreparation> {
       AppUtils.showError('An error occurred: $e');
     }
   }
-
+*/
   @override
   Widget build(BuildContext context) {
     return BaseView<ExamPrepViewModel>(
@@ -63,7 +63,7 @@ class _ExamPreparationState extends State<ExamPreparation> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 10),
-                if (_courseId != null)
+                /*if (_courseId != null)
                   StreamBuilder<QuerySnapshot>(
                     stream: model.getModules(_courseId!),
                     builder: (context, snapshot) {
@@ -138,7 +138,11 @@ class _ExamPreparationState extends State<ExamPreparation> {
                         },
                       );
                     },
-                  ),
+                  ),*/
+                   CommonTextFormField(
+                  controller: model.subjectController,
+                  hintTextWidget: 'Enter subject',
+                ),
                 CommonSizedBox(height: 20),
                 CommonTextFormField(
                   controller: model.topicController,
@@ -147,7 +151,7 @@ class _ExamPreparationState extends State<ExamPreparation> {
                 CommonSizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    if (_selectedSubjectId != null &&
+                    if (model.subjectController.text.isNotEmpty &&
                         model.topicController.text.isNotEmpty) {
                       showDialog(
                         context: context,
