@@ -6,6 +6,7 @@ static const String chatIcon = 'assets/icons/chat.png';
 static const String examprepIcon = 'assets/icons/examprep.png';
 static const String  topicIcon = 'assets/icons/topicsummary.png';
 
+static const String settingsIcon = 'assets/icons/settings.png';
 static const String pdfIcon = 'assets/icons/file-pdf.png';
 static const String bookIcon = 'assets/icons/book-alt.png';
 static const String profileIcon = 'assets/icons/user.png';

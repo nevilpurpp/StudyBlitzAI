@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:nevilai/app/core/constants/assets_constant.dart';
 import 'package:nevilai/app/data/providers/base_view.dart';
 import 'package:nevilai/app/data/providers/viewmodel/topic_summarizer_view.dart';
-import 'package:nevilai/app/ui/widgets/common_send_button.dart';
 import 'package:nevilai/app/ui/widgets/common_sized_box.dart';
 import 'package:nevilai/app/ui/widgets/common_text_form_field.dart';
 import 'package:path_provider/path_provider.dart';

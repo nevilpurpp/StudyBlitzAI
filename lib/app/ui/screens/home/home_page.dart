@@ -45,11 +45,23 @@ class _HomePageState extends State<HomePage> {
             width: 30,
           ),
           const SizedBox(width: 10),
-          const Text('Nevi virtual Assistant'),
+          const Text('Study Blitz'),
         ],
       ),
       automaticallyImplyLeading: false,
       centerTitle: true,
+      actions:[
+        Padding(
+          padding: const EdgeInsets.fromLTRB(5, 5, 13, 5),
+          child: GestureDetector(
+            onTap: () {
+              
+            },
+            child: Image.asset(AssetConstant.settingsIcon,
+            color: Colors.white70,),
+          ),
+        )
+      ]
     );
   }
 
