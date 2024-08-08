@@ -53,8 +53,12 @@ int? minLines;
             filled: true,
             hintText: hintTextWidget,
             hintStyle:
-                const TextStyle(color: ColorConstants.white38, fontSize: 17),
-            fillColor: ColorConstants.green373E4E,
+                 TextStyle(color: Theme.of(context).brightness == Brightness.dark
+                 ? ColorConstants.white38
+                 :  ColorConstants.green3D4354, fontSize: 17),
+            fillColor: Theme.of(context).brightness == Brightness.dark
+                  ? ColorConstants.green3D4354
+                  : Colors.white70,
             border: const OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.all(Radius.circular(50)))),

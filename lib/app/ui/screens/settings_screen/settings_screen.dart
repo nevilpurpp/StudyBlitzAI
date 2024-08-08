@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../data/providers/base_view.dart';
 import '../../../data/providers/viewmodel/theme_model.dart';
+import '../../../routes/routes.dart';
+import '../../widgets/custom_listtile.dart';
 
 
 class SettingsScreen extends StatelessWidget {
@@ -17,18 +19,19 @@ class SettingsScreen extends StatelessWidget {
           return ListView(
             children: [
               GestureDetector(
-                child: ListTile(
-                  title: const Text('Profile'),
-                  leading: Icon(Icons.person_2_rounded, 
-                  color: Theme.of(context).colorScheme.primary,),
-                  trailing: Icon(Icons.arrow_forward_ios_rounded, 
-                  color: Theme.of(context).colorScheme.primary,),
+                onTap: (){
+                  Navigator.pushNamed(context, Routes.profileRoute);
+                },
+                child: const CustomListTile(
+                  title: 'Profile',
+                  leading: Icon(Icons.person_2_rounded, ),
+                  trailing: Icon(Icons.arrow_forward_ios_rounded),
                 ),
               ),
-              ListTile(
-                title: const Text('Theme'),
-                leading: Icon(Icons.lightbulb_circle_rounded,
-                color: Theme.of(context).colorScheme.primary),
+               CustomListTile(
+                title: 'Theme',
+                leading: const Icon(Icons.lightbulb_circle_rounded,
+                ),
                 trailing: Switch(
                   value: model.themeMode == ThemeMode.dark,
                   onChanged: (value) {
@@ -36,13 +39,13 @@ class SettingsScreen extends StatelessWidget {
                   },
                 ),
               ),
-               ListTile(
-                title: const Text('About'),
-                leading: Icon(Icons.info_outline_rounded,
-                color: Theme.of(context).colorScheme.primary),
-                trailing: Icon(Icons.arrow_forward_ios_rounded,
-                color: Theme.of(context).colorScheme.primary),
-              ),
+               GestureDetector(
+                 child: const CustomListTile(
+                  title:'About',
+                  leading: Icon(Icons.info_outline_rounded,),
+                  trailing: Icon(Icons.arrow_forward_ios_rounded,),
+                               ),
+               ),
             ],
           );
         },

@@ -5,7 +5,7 @@ import 'base_model.dart';
 
 class ThemeModel extends BaseModel {
   
-   ThemeMode _themeMode = ThemeMode.system;
+   ThemeMode _themeMode = ThemeMode.light;
 
   ThemeMode get themeMode => _themeMode;
 

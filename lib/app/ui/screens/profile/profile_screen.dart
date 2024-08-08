@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../../../core/constants/assets_constant.dart';
 import '../../../data/providers/base_view.dart';
 import '../../../data/providers/viewmodel/auth_view_model.dart';
+import '../../widgets/custom_listtile.dart';
 import '../home/home_page.dart';
 
 // ignore: must_be_immutable
@@ -50,14 +52,16 @@ Widget buildProfilePage(BuildContext context){
           model!.signOut();
          // if(model!.signOut() )
         },
-         child: const ListTile(
-          leading: Icon(Icons.logout_rounded),
-          title: Text('Log Out'),
-          subtitle: Text('exit from your account'),
-          ),
-       )
+         child: const  CustomListTile(
+              leading: Icon(Icons.logout_rounded,),
+              title: 'Log Out',
+              subtitle: 'exit from your account',
+              trailing:   Icon(Icons.arrow_forward_ios_rounded,),
+          ),)
+       
       ],
     ),
   );
 }
 }
+

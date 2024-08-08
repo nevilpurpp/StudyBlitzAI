@@ -59,7 +59,10 @@ class _HomePageState extends State<HomePage> {
               Navigator.pushNamed(context, Routes.settingsRoute);
             },
             child: Image.asset(AssetConstant.settingsIcon,
-            color: Colors.white70,),
+            color: Theme.of(context).brightness == Brightness.dark
+           ? Colors.white70
+            : Colors.grey,
+            ),
           ),
         )
       ]
@@ -79,7 +82,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, Routes.profileRoute);
+              //Navigator.pushNamed(context, Routes.profileRoute);
             },
             child: Row(
               children: [
@@ -88,17 +91,23 @@ class _HomePageState extends State<HomePage> {
                   backgroundImage: authViewModel.userphoto != null
                       ? NetworkImage(authViewModel.userphoto) as ImageProvider
                       : const AssetImage(AssetConstant.profileIcon) as ImageProvider,
-                  backgroundColor: Colors.white,
+                  backgroundColor:  Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white70
+                  : Colors.black,
+            
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     'Hello, ${authViewModel.username ?? 'Welcome!'}',
-                    style: const TextStyle(
+                    style:  TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                       color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white70
+                    : Colors.black,
+            ),
+                    
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -106,11 +115,13 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 10),
-          const Text(
+           Text(
             'Ace your exams with the ultimate study buddy.',
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white70,
+             color: Theme.of(context).brightness == Brightness.dark
+      ? Colors.white70
+      : Colors.black,
             ),
           ),
         ],
