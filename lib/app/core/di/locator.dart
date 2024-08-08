@@ -6,9 +6,11 @@ import 'package:nevilai/app/data/providers/viewmodel/topic_summarizer_view.dart'
 import '../../data/middleware/api_services.dart';
 import '../../data/providers/viewmodel/chat_view_model.dart';
 import '../../data/providers/viewmodel/exam_prep_view_model.dart';
+import '../../data/providers/viewmodel/theme_model.dart';
 
 final locator = GetIt.instance;
 setUpLocator() {
+  locator.registerLazySingleton(() => ThemeModel());
   locator.registerLazySingleton(() => ChatViewModel());
   locator.registerLazySingleton(() => TopicSummarizerView());
   locator.registerLazySingleton(() => ExamPrepViewModel());
@@ -16,4 +18,5 @@ setUpLocator() {
   locator.registerLazySingleton(() => AuthViewModel());
   locator.registerLazySingleton(() => AppUtils());
   locator.registerLazySingleton(() => OnboardingViewModel());
+  
 }

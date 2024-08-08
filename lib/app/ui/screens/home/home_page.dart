@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
   AppBar _buildAppBar() {
     return AppBar(
       toolbarHeight: 40,
+      /*
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -45,9 +46,9 @@ class _HomePageState extends State<HomePage> {
             width: 30,
           ),
           const SizedBox(width: 10),
-          const Text('Study Blitz'),
+          //const Text('Study Blitz'),
         ],
-      ),
+      )*/
       automaticallyImplyLeading: false,
       centerTitle: true,
       actions:[
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.fromLTRB(5, 5, 13, 5),
           child: GestureDetector(
             onTap: () {
-              
+              Navigator.pushNamed(context, Routes.settingsRoute);
             },
             child: Image.asset(AssetConstant.settingsIcon,
             color: Colors.white70,),

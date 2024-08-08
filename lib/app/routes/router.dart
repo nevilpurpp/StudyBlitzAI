@@ -11,6 +11,7 @@ import 'package:nevilai/app/ui/screens/splash_screen/splash_screen.dart';
 import '../ui/screens/chat_screen/chat_screen.dart';
 import '../ui/screens/exam_prep/exam_preparation.dart';
 import '../ui/screens/exam_prep/questions_page.dart';
+import '../ui/screens/settings_screen/settings_screen.dart';
 import 'routes.dart';
 
 class PageRouter {
@@ -39,7 +40,9 @@ class PageRouter {
       case  Routes.loginRoute:
         return MaterialPageRoute(builder: (context) => LoginScreen());  
       case Routes.registerRoute:
-         return MaterialPageRoute(builder: (context) => RegisterScreen());
+         return MaterialPageRoute(builder: (context) => const RegisterScreen());
+      case Routes.settingsRoute:
+          return MaterialPageRoute(builder: (context) => const SettingsScreen());   
       default:
         return MaterialPageRoute(
             builder: (BuildContext conktext) => const Scaffold(
