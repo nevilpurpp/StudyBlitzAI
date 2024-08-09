@@ -13,35 +13,35 @@ class QuizDetailPage extends StatelessWidget {
     var selectedAnswers = Map<int, String>.from(data['selectedAnswers']);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quiz Detail - ${data['subject']}'),
+        title: Text('Recent questions - ${data['subject']}'),
       ),
-      body: ListView.builder(
-        itemCount: questions.length,
-        itemBuilder: (context, index) {
-          var question = questions[index];
-          var selectedAnswer = selectedAnswers[index];
-          return ListTile(
-            title: Text(question.question),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ...question.incorrectAnswers.map((answer) => Text(
-                  answer,
-                  style: TextStyle(
-                    color: selectedAnswer == answer ? Colors.red : null,
-                  ),
-                )),
-                Text(
-                  question.answer,
-                  style: TextStyle(
-                    color: selectedAnswer == question.answer ? Colors.green : null,
-                    fontWeight: FontWeight.bold,
-                  ),
+      body: Column(
+        children: [
+          ListView.builder(
+            itemCount: questions.length,
+            itemBuilder: (context, index) {
+              var question = questions[index];
+              var selectedAnswer = selectedAnswers[index];
+              return ListTile(
+                title: Text(' ${index + 1}.${question.question}'),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      question.answer,
+                      style: TextStyle(
+                        color: selectedAnswer == question.answer ? Colors.green : null,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          );
-        },
+              );
+            },
+          ),
+          //save to file - docx/pdf
+        ],
+        
       ),
     );
   }
