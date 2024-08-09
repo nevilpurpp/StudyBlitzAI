@@ -17,20 +17,19 @@ class ProfileScreen extends StatelessWidget {
         this.model = model;
       },
       builder: (context, model, child) {
-        return SafeArea(child: 
-    GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-        model.keyboard(false);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Profile'),
-          centerTitle: true,
-        ),
-        body: buildProfilePage(context) ,
-      ),
-    ));
+        return GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+            model.keyboard(false);
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Profile'),
+              centerTitle: true,
+            ),
+            body: buildProfilePage(context) ,
+          ),
+        );
       }
     );
 }

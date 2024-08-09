@@ -9,6 +9,7 @@ class QuestionsPage extends StatefulWidget {
   const QuestionsPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _QuestionsPageState createState() => _QuestionsPageState();
 }
 
@@ -68,7 +69,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      question.question,
+                      ' ${index + 1}.${question.question}',
                       style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 10),
@@ -87,6 +88,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                 score = calculateScore();
               });
               await model.saveQuizToFirestore();
+              // ignore: use_build_context_synchronously
               _showResultsDialog(context);
             },
             child: const Text('Submit'),

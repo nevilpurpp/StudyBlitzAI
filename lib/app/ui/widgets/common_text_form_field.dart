@@ -44,9 +44,13 @@ String? labelTextWidget;
         textInputAction: TextInputAction.go,
         keyboardType: TextInputType.text,
         onTap: onTap,
-        cursorColor: ColorConstants.white,
-        style: const TextStyle(
-            color: ColorConstants.white, fontWeight: FontWeight.w500),
+        cursorColor: Theme.of(context).brightness == Brightness.dark
+                 ? ColorConstants.white38
+                 :  ColorConstants.green3D4354,
+        style:  TextStyle(
+            color:  Theme.of(context).brightness == Brightness.dark
+                 ? ColorConstants.white38
+                 :  ColorConstants.green3D4354, fontWeight: FontWeight.w500),
         onEditingComplete: onEditingComplete,
         controller: controller,
         decoration: InputDecoration(
