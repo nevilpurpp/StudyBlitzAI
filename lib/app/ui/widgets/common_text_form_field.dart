@@ -18,7 +18,8 @@ class CommonTextFormField extends StatelessWidget {
       this.obsocuringCharacter,
       this.obscureText= false,
       this.maxLines,
-      this.minLines
+      this.minLines,
+      this.labelTextWidget,
       });
 
   void Function()? onEditingComplete;
@@ -31,6 +32,7 @@ class CommonTextFormField extends StatelessWidget {
    bool   obscureText;
 int? maxLines;
 int? minLines;
+String? labelTextWidget;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -61,7 +63,11 @@ int? minLines;
                   : Colors.white70,
             border: const OutlineInputBorder(
                 borderSide: BorderSide.none,
-                borderRadius: BorderRadius.all(Radius.circular(50)))),
+                borderRadius: BorderRadius.all(Radius.circular(50))
+                ),
+                labelText: labelTextWidget, 
+                ),
+               
       ),
     );
   }

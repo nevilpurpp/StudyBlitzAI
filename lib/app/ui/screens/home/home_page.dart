@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                       : const AssetImage(AssetConstant.profileIcon) as ImageProvider,
                   backgroundColor:  Theme.of(context).brightness == Brightness.dark
                   ? Colors.white70
-                  : Colors.black,
+                  : const Color.fromARGB(255, 167, 146, 146),
             
                 ),
                 const SizedBox(width: 10),

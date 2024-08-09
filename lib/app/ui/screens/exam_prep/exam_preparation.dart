@@ -49,7 +49,7 @@ class _ExamPreparationState extends State<ExamPreparation> {
       builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Quick Quiz Practice'),
+            title: const Text('5 minute Quiz Practice'),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios_new),
               onPressed: () {
@@ -141,12 +141,14 @@ class _ExamPreparationState extends State<ExamPreparation> {
                   ),*/
                    CommonTextFormField(
                   controller: model.subjectController,
-                  hintTextWidget: 'Enter subject',
+                  labelTextWidget: 'Enter Subject *',
+                  hintTextWidget: 'Subject',
                 ),
                 CommonSizedBox(height: 20),
                 CommonTextFormField(
                   controller: model.topicController,
-                  hintTextWidget: 'Enter topic',
+                  labelTextWidget: 'Enter Topic *',
+                  hintTextWidget: 'Topic',
                 ),
                 CommonSizedBox(height: 20),
                 ElevatedButton(

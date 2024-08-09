@@ -34,7 +34,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
             },
             child: Scaffold(
               appBar: AppBar(
-                title: const Text('Quiz Questions'),
+                title: const Text('5 minute Quiz'),
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.info_outline),
