@@ -39,11 +39,17 @@ class TopicSummarizerView extends BaseModel{
     updateUI(); // Update UI with the retrieved summary
     notifyListeners();
     
-  } catch (error) {
+  } catch (e) {
     // Handle potential errors during API call
-    AppUtils.showError('$error');
+    if (e is SocketException){
+       AppUtils.showError('No Internet Connection. Please try again later $e');
+       log("No Internet Connection. Please try again later $e");
+    }
+    else{
+      AppUtils.showError('An unknown error occurred: $e');
+    }
     if (kDebugMode) {
-      print("Error generating summary: $error");
+      print("Error generating summary: $e");
     }
   }
 }

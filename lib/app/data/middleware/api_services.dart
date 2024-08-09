@@ -23,8 +23,13 @@ class GoogleGenerativeServices {
       result = response.text ?? '';
       return result;
     } catch (e) {
-      AppUtils.showError('Error is $e');
-      log("Error is $e");
+      if (e is SocketException){
+       AppUtils.showError('No Internet Connection. Please try again later $e');
+       log("No Internet Connection. Please try again later $e");
+    }
+    else{
+      AppUtils.showError('An unknown error occurred: $e');
+    }
     }
     return '';
   }
@@ -52,8 +57,15 @@ class GoogleGenerativeServices {
 
     return jsonResponse.map((item) => item as Map<String, dynamic>).toList();
   } catch (e) {
-    AppUtils.showError('Error is $e');
-    log("Error is $e");
+    if (e is SocketException){
+       AppUtils.showError('No Internet Connection. Please try again later $e');
+       log("No Internet Connection. Please try again later $e");
+    }
+    else{
+      AppUtils.showError('An unknown error occurred: $e');
+    }
+   
+    
     rethrow;
   }
 }
@@ -78,8 +90,13 @@ class GoogleGenerativeServices {
           role: response.candidates.first.content.role.toString(),
           text: response.text.toString());
     } catch (e) {
-      AppUtils.showError('Error is $e');
-      log("Error is $e");
+     if (e is SocketException){
+       AppUtils.showError('No Internet Connection. Please try again later $e');
+       log("No Internet Connection. Please try again later $e");
+    }
+    else{
+      AppUtils.showError('An unknown error occurred: $e');
+    }
     }
     return null;
   }

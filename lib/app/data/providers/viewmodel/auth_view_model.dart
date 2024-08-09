@@ -77,7 +77,13 @@ Stream<User?> get userState => _auth.authStateChanges();
       handleFirebaseAuthError(e);
       return null;
     } catch (e) {
-      AppUtils.showError('An error occurred: $e');
+     if (e is SocketException){
+       AppUtils.showError('No Internet Connection. Please try again later $e');
+       log("No Internet Connection. Please try again later $e");
+    }
+    else{
+      AppUtils.showError('An unknown error occurred: $e');
+    }
       return null;
     }
   }
@@ -101,7 +107,13 @@ Stream<User?> get userState => _auth.authStateChanges();
       handleFirebaseAuthError(e);
       return null;
     } catch (e) {
-      AppUtils.showError('An error occurred: $e');
+      if (e is SocketException){
+       AppUtils.showError('No Internet Connection. Please try again later $e');
+       log("No Internet Connection. Please try again later $e");
+    }
+    else{
+      AppUtils.showError('An unknown error occurred: $e');
+    }
       return null;
     }
   }
@@ -113,7 +125,13 @@ Future<void> resetPassword(String email) async {
     } on FirebaseAuthException catch (e) {
       handleFirebaseAuthError(e);
     } catch (e) {
-      AppUtils.showError('An error occurred: $e');
+      if (e is SocketException){
+       AppUtils.showError('No Internet Connection. Please try again later $e');
+       log("No Internet Connection. Please try again later $e");
+    }
+    else{
+      AppUtils.showError('An unknown error occurred: $e');
+    }
     }
   }
 
@@ -162,7 +180,13 @@ Future<UserCredential> signInWithGoogle() async {
       handleFirebaseAuthError(e);
       return Future.error('Firebase authentication error: ${e.code}');
     } catch (e) {
-      AppUtils.showError('An error occurred: $e');
+     if (e is SocketException){
+       AppUtils.showError('No Internet Connection. Please try again later $e');
+       log("No Internet Connection. Please try again later $e");
+    }
+    else{
+      AppUtils.showError('An unknown error occurred: $e');
+    }
       return Future.error('An error occurred: $e');
     }
   }
