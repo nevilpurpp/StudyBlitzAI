@@ -29,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
               ),
                CustomListTile(
-                title: 'Theme',
+                title: 'Darkmode',
                 leading: const Icon(Icons.lightbulb_circle_rounded,
                 ),
                 trailing: Switch(

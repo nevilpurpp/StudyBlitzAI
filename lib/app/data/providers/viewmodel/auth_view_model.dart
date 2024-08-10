@@ -60,7 +60,7 @@ Stream<User?> get userState => _auth.authStateChanges();
 
     try {
       final credential = await _auth.createUserWithEmailAndPassword(
-        email: email,
+        email: email.trim(),
         password: password,
       
       );
