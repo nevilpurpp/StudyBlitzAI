@@ -116,8 +116,13 @@ class ExamPrepViewModel extends BaseModel {
       }
     }
   }
+   List<String> shuffleAnswers(QuizQuestion question, int questionIndex) {
+    List<String> allOptions = List.from(question.incorrectAnswers)
+      ..add(question.answer);
+    allOptions.shuffle();
+    return allOptions;
 }
-
+}
 extension on QuizQuestion {
   Map<String, dynamic> toJson() {
     return {

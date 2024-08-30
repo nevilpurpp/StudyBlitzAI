@@ -2,6 +2,7 @@ class QuizQuestion {
   final String question;
   final String answer;
   final List<String> incorrectAnswers;
+    
 
   QuizQuestion({
     required this.question,

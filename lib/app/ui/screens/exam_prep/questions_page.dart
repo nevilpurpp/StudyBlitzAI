@@ -98,11 +98,9 @@ class _QuestionsPageState extends State<QuestionsPage> {
   }
 
   List<Widget> buildOptions(QuizQuestion question, int questionIndex) {
-    List<String> allOptions = List.from(question.incorrectAnswers)
-      ..add(question.answer);
-    allOptions.shuffle(); // Shuffle the options to place the correct answer randomly
-
-    List<Widget> options = allOptions.map((option) {
+     // Shuffle the options to place the correct answer randomly
+  var allAnswers = model.shuffleAnswers(question, questionIndex);
+    List<Widget> options = allAnswers.map((option) {
       return RadioListTile<String>(
         title: Text(
           option,
@@ -113,6 +111,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
           ),
         ),
         value: option,
+      
         groupValue: selectedAnswers[questionIndex],
         onChanged: submitted
             ? null
