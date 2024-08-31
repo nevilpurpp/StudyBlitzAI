@@ -105,7 +105,7 @@ class ExamPrepViewModel extends BaseModel {
         'selectedAnswers': selectedAnswers.map((key, value) => MapEntry(key.toString(), value)),
         'timestamp': FieldValue.serverTimestamp(),
       });
-      AppUtils.showSuccess('Quiz saved to Firestore');
+      AppUtils.showSuccess('Questions saved successfully');
       if (kDebugMode) {
         print('Quiz saved to Firestore');
       }
